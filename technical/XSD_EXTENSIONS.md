@@ -4,18 +4,20 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-## XSD Extensions
-If for some reason you need extended elements/attributes next to the IEC XSD schemas, we define separate XSD schemas.
-These are stored in the `scl-extension` module of the [CoMPAS Core repository](https://github.com/com-pas/compas-core).
-An example is the [CoMPAS XSD](https://github.com/com-pas/compas-core/blob/develop/scl-extension/src/main/resources/xsd/SCL_CoMPAS.xsd).
+## XSD Розширення
+Якщо з якихось причин вам потрібні розширені елементи/атрибути поряд зі схемами IEC XSD, ми визначаємо окремі схеми XSD.
 
-Another option was using the [CoMPAS IEC XSD repository](https://github.com/com-pas/compas-scl-xsd), but we want to keep that repository dedicated to the IEC XSD schemas.
+Вони зберігаються в `scl-extension` модулі [CoMPAS Core repository](https://github.com/com-pas/compas-core).
 
-#### CoMPAS-broad XSD extensions
-In case we need CoMPAS-broad specific XSD schemas, these can be added to the `scl-extension` module of the [CoMPAS Core repository](https://github.com/com-pas/compas-core) as stated above. Added them is enough, the project including the dependency needs to make sure it's used correctly, e.g. validation should be done by the application itself.
+Прикладом може слугувати [CoMPAS XSD](https://github.com/com-pas/compas-core/blob/develop/scl-extension/src/main/resources/xsd/SCL_CoMPAS.xsd).
 
-### Example
-Let's say you want to use a `Filename` element and a `FileType` element, which has been declared in `SCL_CoMPAS.xsd` as found in the `scl-extension` module in the [CoMPAS Core Repository](https://github.com/com-pas/compas-core). We do this by adding:
+Іншим варіантом було використання [CoMPAS IEC XSD repository](https://github.com/com-pas/compas-scl-xsd), але ми хочемо зберегти цей репозиторій, присвячений схемам IEC XSD.
+
+#### CoMPAS-широкі розширення XSD
+Якщо нам потрібні специфічні для CoMPAS XSD-схеми, вони можуть бути додані до `scl-extension` модуля [CoMPAS Core repository](https://github.com/com-pas/compas-core) як зазначено вище. Достатньо лише додати їх, проект, що включає залежність, повинен переконатися, що вона використовується правильно, наприклад, перевірка повинна виконуватися самим додатком.
+
+### Приклад
+Припустимо, ви хочете використати елемент `Filename` та елемент `FileType`, який було оголошено у файлі `SCL_CoMPAS.xsd`, що знаходиться у модулі `cl-extension` у [CoMPAS Core Repository](https://github.com/com-pas/compas-core). Ми робимо це шляхом додавання:
 
 ```xml
 <!-- #(1) -->
@@ -31,11 +33,10 @@ Let's say you want to use a `Filename` element and a `FileType` element, which h
 </SCL>
 ```
 
-Few points:
-- (1): Include the namespace of the included XSD elements and/or attributes, in this case it's `https://www.lfenergy.org/compas/v1`. Give it a prefix name like (in this case) `compas`.
-- (2): Create a Private element in the SCL. 
-  We could declare the elements without surrounding it with a Private, but the advantage of using private elements is that the data content is preserved at data exchange between tools. For more information, see section 8.3.6 in the IEC-61850-6 standard.
-  Also, the type is an important aspect of a Private elements (also because it's required). For CoMPAS Private elements, we used the `"compas_scl"` type to distinguish it from other Private elements.
-- (3): Declare the elements inside the Private element, in this case the `Filename` and the `FileType` elements.
+Кілька пунктів:
+- (1): Включіть простір імен включених XSD-елементів та/або атрибутів, у цьому випадку це `https://www.lfenergy.org/compas/v1`. Дайте йому префіксне ім'я, наприклад (у цьому випадку) `compas`.
+- (2): Створіть приватний елемент у SCL. 
+  Ми могли б оголошувати елементи, не оточуючи їх Private, але перевага використання приватних елементів полягає в тому, що вміст даних зберігається при обміні даними між інструментами. Для отримання додаткової інформації див. розділ 8.3.6 стандарту IEC-61850-6. Крім того, тип є важливим аспектом приватного елемента (також тому, що він є обов'язковим). Для приватних елементів CoMPAS ми використали тип `"compas_scl"`, щоб відрізнити його від інших приватних елементів.
+- (3): Оголосіть елементи всередині елемента Private, у цьому випадку елементи `Filename` та `FileType`.
 
-**Make sure validation is done correctly by project's own validation!**
+**Переконайтеся, що валідація виконана правильно за допомогою власної валідації проекту!**

@@ -4,16 +4,16 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-## Database Management
+## Керування базами даних
 
-## Versioning Overview
+## Огляд версій
 ![Versioning overview](./images/database/BaseX_Versioning.png)
 
-To achieve versioning (which is not available out-of-the-box), we need to add something smart to BaseX. This smart thing is [RESTXQ](http://exquery.github.io/exquery/exquery-restxq-specification/restxq-1.0-specification.html) in our case.
+Щоб реалізувати керування версіями (яке недоступне "з коробки"), нам потрібно додати до BaseX дещо розумне. Цією розумною річчю буде [RESTXQ](http://exquery.github.io/exquery/exquery-restxq-specification/restxq-1.0-specification.html) в нашому випадку.
 
-With RESTXQ, functions can be created using xQuery and some added intelligence like variables and for-loops for example.
+За допомогою RESTXQ можна створювати функції, використовуючи xQuery і деякі додаткові інтелектуальні можливості, наприклад, змінні і цикли.
 
-Example RESTXQ function:
+Приклад функції RESTXQ:
 
 ```
 declare
@@ -28,44 +28,44 @@ function page:search($term as xs:string) {
 };
 ```
 
-By using RESTXQ, a versioning mechanism can be created. So for example, in a edit (PUT) function we can do something like: When editing a already stored configuration, save it by incrementing the version and store as a separate configuration. The old configuration is stored in the archive database, the current version is replaced in the current database.
+За допомогою RESTXQ можна створити механізм керування версіями. Так, наприклад, у функції редагування (PUT) ми можемо зробити щось на кшталт При редагуванні вже збереженої конфігурації, зберегти її, збільшивши версію, і зберегти як окрему конфігурацію. Стара конфігурація зберігається в архівній базі даних, поточна версія замінюється в поточній базі даних.
 
-In a get (GET) function, we can make distinction between newer and older versions using RESTXQ. By using xQuery syntax (scl[@version="1"] for example), we can get specific versions of a configuration.
+У функції get (GET) ми можемо розрізняти новіші та старіші версії за допомогою RESTXQ. Використовуючи синтаксис xQuery (наприклад, scl[@version=«1»]), ми можемо отримати конкретні версії конфігурації.
 
-### Versioning type
-For type of versioning, we prefer [Semantic Versioning](https://semver.org/). This to keep versioning simple. For every changeset CoMPAS is going to ask if it's a major, minor or a patch. This way the version will be adjusted according to the user's needs. An example of distinction can be:
-- A changeset is Major in case a full XML section is being added.
-- A changeset is Minor is a piece of data is adjusted.
-- A changeset is a Patch if a typo is fixed.
-But this is up to the user.
+### Тип версійності
+Як тип керування версіями ми надаємо перевагу [Semantic Versioning](https://semver.org/). Це спрощує керування версіями. Для кожного набору змін CoMPAS запитуватиме, чи це мажор, мінор або патч. Таким чином, версію буде скориговано відповідно до потреб користувача. Прикладом відмінності може бути наступне:
+- Набір змін є мажорним, якщо додається повний розділ XML.
+- Набір змін є незначним, якщо коригується частина даних.
+- Набір змін є виправленням, якщо виправляється друкарська помилка.
+Але це залежить від користувача.
 
-Saving the version will be done in combination with the History section (tHitem) of the SCL structure. This history section contains multiple history items, so you can create a provenance section. Please checkout the [Provenance](#provenance-overview) section for more information. Key point is: a tHitem contains the following attributes:
-- Version
-- Revision
-- When
-- Who
-- What
-- Why
+Збереження версії буде виконано в поєднанні з розділом історії (tHitem) структури SCL. Цей розділ історії містить кілька елементів історії, тому ви можете створити розділ походження. Будь ласка, перегляньте розділ [Походження](#provenance-overview) для отримання додаткової інформації. Ключовим моментом є те, що tHitem містить наступні атрибути:
+- Версія
+- Ревізія
+- Коли
+- Хто
+- Що
+- Чому
 
-This creates provenance, and version is one of them. The version attribute will be used for the latest version.
+Це створює атрибути походження, і версія є одним з них. Атрибут версії використовуватиметься для позначення останньої версії.
 
-Another solution could be [Branch Based Versioning](https://simon-maxen.medium.com/branch-based-versioning-5ebf6ca2bccb). This way, a configuration file can be 'branched', and can be 'merged' when the user think it's fine. When merging, a newer version number can be added (can be done in combination with semantic versioning).
-This in indeed a fancy way of versioning, but it's too complex for our use cases. We don't see users branching a configuration file and saving it for a couple of days, before merging it. Besides, this kind of versioning isn't supported in BaseX out of the box so we have to create it ourselves. When comparing added value to effort, this isn't what we want.
+Іншим рішенням може бути [Branch Based Versioning](https://simon-maxen.medium.com/branch-based-versioning-5ebf6ca2bccb). У цьому випадку файл конфігурації може бути «розгалуженим» і може бути «об'єднаним», коли користувач вирішить, що це нормально. Під час злиття можна додати новіший номер версії (це можна зробити у поєднанні із семантичним керуванням версіями).
+Це дійсно чудовий спосіб керування версіями, але він занадто складний для наших випадків використання. Ми не бачимо користувачів, які розгалужують файл конфігурації і зберігають його на кілька днів, перш ніж об'єднати. Крім того, такий тип версій не підтримується в BaseX з коробки, тому нам доводиться створювати його самостійно. Якщо порівнювати додану вартість з витраченими зусиллями, то це не те, чого ми хочемо.
 
-## Tech Talk
+## Технічна розмова
 
-### Points to remember
+### Важливі моменти для пам'яті
 - home of BaseX = /srv/basex
 - RESTXQ file extension = .xqm
 - RESTXQPATH variable (in {home}/webapp/WEB-INF/web.xml) points to directory containing the RESTXQ modules (.xqm files)
   - Default is '.', which is relative to the WEBPATH variable (which is {home}/webapp)
 
-### Example using RESTXQ
+### Приклад використання RESTXQ
 
-- Run a BaseX container
-- Use shell inside container (docker exec -it <container id> bash)
-- create a RESTXQ module: vi /srv/basex/webapp/test.xqm for example
-- copy paste the following code:
+- Запуск контейнера BaseX
+- Використовуйте оболонку всередині контейнера (docker exec -it <id контейнера> bash)
+- створіть модуль RESTXQ: vi /srv/basex/webapp/test.xqm, наприклад
+- скопіюйте наступний код:
 
 ```
 module namespace page = 'http://basex.org/examples/web-page';
@@ -77,94 +77,97 @@ declare %rest:path("hello/{$who}") %rest:GET function page:hello($who) {
 };
 ```
 
-- You don't have to restart the container, when doing a REST request it seaches on the fly for functions.
-- Do a GET request like http://localhost:8984/hello/World
-- You will get a XML containing a title !Hello World!
+- Вам не потрібно перезапускати контейнер, при виконанні REST-запиту він «на льоту» шукає функції.
+- Виконайте GET-запит на зразок http://localhost:8984/hello/World
+- Ви отримаєте XML, що містить заголовок !Hello World!
 
-### Restrictions
-A single database is restricted to 2 billion nodes (also, see [BaseX Statistics](https://docs.basex.org/wiki/Statistics))
-A node in this case is an XML node like an element, attribute, text, etc.
+### Обмеження
+Одна база даних обмежена 2 мільярдами вузлів (також див. [BaseX Statistics](https://docs.basex.org/wiki/Statistics)).
+Вузол у цьому випадку - це вузол XML, такий як елемент, атрибут, текст тощо.
 
-### Sources
+### Джерела
 http://www.adamretter.org.uk/presentations/restxq_mugl_20120308.pdf
 
-## Database Rights
-In a microservice architecture, a microservice's database should be part of the implementation of that service and cannot be accessed directly by other services. This way, the service is loosely coupled and can be developed/scaled/deployed independently.
+## Права бази даних
+В архітектурі мікросервісів база даних мікросервісу повинна бути частиною реалізації цього сервісу і не може бути доступною безпосередньо для інших сервісів. Таким чином, сервіс є слабко пов'язаним і може бути розроблений/масштабований/розгорнутий незалежно.
 
-There are some patterns to keep persistent data private:
-- private-tables-per-service
+Існує декілька шаблонів для збереження приватності постійних даних:
+- приватні таблиці для кожного сервісу
 - schema-per-service
-- database-server-per-service
-As seen, 2 options are not available for BaseX because it's not a relational database. It doesn't have tables or schemas.
-A Database-server-per-service pattern helps ensure that the services are lossely coupled.
+- база даних-сервер-для-сервісу
+Як бачимо, 2 варіанти недоступні для BaseX, оскільки це не реляційна база даних. У ній немає ні таблиць, ні схем.
+Шаблон «база даних-сервер-на-сервіс» допомагає гарантувати, що сервіси з'єднані без втрат.
 
-The CIM - IEC 61850 service for example get's their own database. If another service wants to get SCD files from this service, use the API of that particular service.
+Наприклад, служба CIM - IEC 61850 отримує власну базу даних. Якщо інший сервіс хоче отримати SCD-файли від цього сервісу, використовуйте API цього сервісу.
 
-### Where do we set the user privileges of Basex?
-Basex has it's own [User Management](https://docs.basex.org/wiki/User_Management).
+### Де ми встановлюємо права користувача Basex?
+Basex має свій [User Management](https://docs.basex.org/wiki/User_Management).
 
-It's pretty straight forward: Basex has Users that can be created. These users can have so-called permissions that can be applied to the user:
+Це досить просто: Basex має користувачів, яких можна створювати. Ці користувачі можуть мати так звані дозволи, які можна застосувати до користувача:
 ![BaseX permissions overview](./images/database/basex_permissions.png)
 
-In this overview, we see 'Global' permissions and 'Local' permissions.
-In both permission groups, a higher permission includes all lower permissions. So a user with the 'Create' permission also has the 'Read' permission.
+У цьому огляді ми бачимо «Глобальні» та «Локальні» дозволи.
+В обох групах дозволів вищий дозвіл включає всі нижчі дозволи. Таким чином, користувач з дозволом «Створювати» також має дозвіл «Читати».
 
-All permissions are stored in a file called users.xml (which can be edited manually) inside the database directory, and is being parsed once BaseX is started.
+Всі дозволи зберігаються у файлі з назвою users.xml (який можна редагувати вручну) в каталозі бази даних, і він аналізується після запуску BaseX.
 
-### How do we connect BaseX with a central identity repository/application?
-BaseX doesn't have compatibility with a central identity repository (like Keycloak) out of the box available, but after discussing it with the BaseX community it's pretty comfortable to achieve this with RESTXQ or xQuery. There are examples available for making use of Keycloak:
+### Як нам під'єднати BaseX з a центральним репозиторієм ідентичностей/додатком?
+BaseX не має сумісності з центральним репозиторієм ідентичностей (наприклад, Keycloak) "з коробки", але після обговорення цього питання з спільнотою BaseX виявилося, що цього досить зручно досягти за допомогою RESTXQ або xQuery. Існують приклади використання Keycloak:
 
-[Example with xQuery](https://code-repo.d4science.org/gCubeSystem/d4science-keycloak-themes/src/branch/master/src/utils/xquery)
+[Приклад з xQuery](https://code-repo.d4science.org/gCubeSystem/d4science-keycloak-themes/src/branch/master/src/utils/xquery)
 
-[Example with RESTXQ](./blob-files/code_examples/auth_sk.xqm)
-Author: Marco Lettere. Origin: [BaseX Mailing List](https://mailman.uni-konstanz.de/pipermail/basex-talk/2021-May/016157.html)
+[Приклад з RESTXQ](./blob-files/code_examples/auth_sk.xqm)
+Автор: Marco Lettere. Орігінал: [BaseX Mailing List](https://mailman.uni-konstanz.de/pipermail/basex-talk/2021-May/016157.html)
 
-Full attached description about this example:
+Повний опис цього прикладу додається:
 
->I attach here an example of an OIDC code grant flow implemented with RestXQ, BaseX permission and error handler.
-The file includes a sort of library for performing the steps of the OIDC flow plus a minimal application that is registered as public client inside keycloak and which is what you should access from your browser by calling http://localhost:8984/authtest or http://localhost:8984/authtest/internal.
-I've put into it also the logout procedure for performing the back-channel logout which closes the SSO session.
-This is only a resume of a more generic and complex module but it should be useful as a howto and it should be as simple to install as copying the file to your BaseX' webapp folder. Use it as you like.
+>Я додаю тут приклад потоку надання коду OIDC, реалізованого за допомогою RestXQ, дозволу BaseX та обробника помилок.
+Файл містить своєрідну бібліотеку для виконання кроків потоку OIDC, а також мінімальний додаток, який реєструється як публічний клієнт всередині keycloak і до якого ви повинні отримати доступ з вашого браузера, звернувшись за адресою http://localhost:8984/authtest або http://localhost:8984/authtest/internal.
+Я також включив до нього процедуру виходу з системи для виконання виходу зі зворотного каналу, який закриває сеанс SSO.
+Це лише короткий опис більш загального і складного модуля, але він має бути корисним як інструкція, а встановити його так само просто, як і скопіювати файл до теки з веб-додатком BaseX. Використовуйте його на свій розсуд.
 
-### Is direct database access allowed within the microservices architecture?
-For maintenance for example, it's of course allowed to have direct database access. There is no best practice available for this. For some things, you just need direct database access.
+### Чи дозволений прямий доступ до бази даних в архітектурі мікросервісів?
+Наприклад, для технічного обслуговування, звичайно, дозволено мати прямий доступ до бази даних. Для цього не існує найкращих практик. Для деяких речей вам просто потрібен прямий доступ до бази даних.
 
-If other microservices need access to the data of an other microservice, the only way (best practice) to do this is by API calls.
+Якщо іншим мікросервісам потрібен доступ до даних іншого мікросервісу, єдиний спосіб (найкраща практика) зробити це - за допомогою викликів API.
 
-Source:
+Джерело:
 https://microservices.io/patterns/data/database-per-service.html
 
-## Provenance Overview
-If the generation of a substation fails for example, we would like to know the provenance of the file.
-This way it's easier to get the cause.
+## Загальний огляд походження
+Наприклад, якщо генерація підстанції зазнає невдачі, ми хотіли б знати походження файлу.
+Так буде легше знайти причину.
 
 ### W3 PROV
-Provenance is information about entities, activities, and people involved in producing a piece of data or thing, which can be used to form assessments about its quality, reliability or trustworthiness. The PROV Family of Documents defines a model, corresponding serializations and other supporting definitions to enable the inter-operable interchange of provenance information in heterogeneous environments such as the Web. This document provides an overview of this family of documents. (https://www.w3.org/TR/prov-overview/#Abstract)
+Походження - це інформація про об'єкти, діяльність і людей, залучених до створення даних або речей, яка може бути використана для формування оцінок їхньої якості, надійності або достовірності. Сімейство документів PROV визначає модель, відповідні серіалізації та інші допоміжні визначення, щоб уможливити інтероперабельний обмін інформацією про походження в гетерогенних середовищах, таких як Інтернет. Цей документ містить огляд цього сімейства документів.
+ (https://www.w3.org/TR/prov-overview/#Abstract)
 
-W3C does have a full standard for extending files with provenance information, in such a way that it's standardized and it enables the interchangeable of provenance information in environments such as, in our case, XML environments. The design of PROV is based on the recommendations of the [Provenance Incubator Group](https://www.w3.org/2005/Incubator/prov/charter).
+W3C має повний стандарт для розширення файлів з інформацією про походження таким чином, щоб вона була стандартизованою і дозволяла взаємозамінність інформації про походження в таких середовищах, як, наприклад, у нашому випадку, XML-середовища. Дизайн PROV базується на рекомендаціях [Provenance Incubator Group](https://www.w3.org/2005/Incubator/prov/charter).
 
 ### W3 PROV-XML
-One of the documents of W3 PROV is PROV-XML. This document converts the PROV standard to XML definitions, and is what we want.
-PROV-XML has 6 components to use:
-- component 1: entities and activities, and the time at which they were created, used, or ended;
-- component 2: derivations of entities from others;
-- component 3: agents bearing responsibility for entities that were generated and activities that happened;
-- component 4: bundles, a mechanism to support provenance of provenance;
-- component 5: properties to link entities that refer to a same thing;
-- component 6: collections forming a logical structure for its members.
+Одним з документів W3 PROV є PROV-XML. Цей документ перетворює стандарт PROV на XML-означення, і це те, що ми хочемо.
+PROV-XML має 6 компонентів для використання:
+- компонент 1: сутності та види діяльності, а також час, коли вони були створені, використані або завершені;
+- компонент 2: похідні сутності від інших;
+- компонент 3: агенти, що несуть відповідальність за створені сутності та дії, що відбулися;
+- компонент 4: пакети, механізм для підтримки підтвердження походження об'єктів;
+- компонент 5: властивості для зв'язування сутностей, які посилаються на одне й те саме;
+- компонент 6: колекції, що формують логічну структуру для своїх членів.
 
-The component we're most interested in, is component 1. And especially the activities.
-There is a [Activity complexType](https://www.w3.org/TR/2013/NOTE-prov-xml-20130430/#term-Activity) defined. An Activity in PROV-XML is defined as:
+Нас найбільше цікавить компонент 1. А особливо діяльність.
 
-> something that occurs over a period of time and acts upon or with entities; it may include consuming, processing, transforming, modifying, relocating, using, or generating entities.
+Існує [Activity complexType](https://www.w3.org/TR/2013/NOTE-prov-xml-20130430/#term-Activity) визначення. Активність в PROV-XML визначено як:
+
+> щось, що відбувається протягом певного періоду часу і діє на або з сутністями; це може включати споживання, обробку, перетворення, модифікацію, переміщення, використання або створення сутностей.
 > 
-This is how we can interpret a edit on a XML file: as an activity.
+Ось як ми можемо інтерпретувати редагування XML-файлу: як дію.
 
-An activity has a start- and endtime. In our case, that can be the period from opening the file to saving the file. It has a type or activity, which will most of the time be an Edit.
+Дія має час початку і закінчення. У нашому випадку це може бути період від відкриття файлу до його збереження. Вона має тип або активність, яка здебільшого буде редагуванням.
 
-And a set of extra attributes can be added. In the added example, an hostname is added. In our case that's not very handy, because if CoMPAS is ran locally, the hostname doesn't say that much. What makes the most sense at this point is adding a User attribute which is linked to the future oAuth 2.0 authorisation/authentication module.
+Також можна додати набір додаткових атрибутів. У доданому прикладі додано ім'я хоста. У нашому випадку це не дуже зручно, тому що якщо CoMPAS запускається локально, ім'я хоста не так вже й багато про що говорить. Наразі доцільніше додати атрибут User, який буде пов'язано з майбутнім модулем авторизації/автентифікації oAuth 2.0.
 
-Example of added PROV section. The UserID attribute is a simplified attribute for identifying the entity doing the activity:
+Приклад доданого розділу PROV. Атрибут UserID - це спрощений атрибут для ідентифікації суб'єкта, який виконує дію:
+
 ```xml
 <prov:document
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -182,28 +185,28 @@ Example of added PROV section. The UserID attribute is a simplified attribute fo
 </prov:document>
 ```
 
-### IEC-61850-6 hItem (History)
-A second option is the History section of a SCL file.
-This section is a standard section of a SCL and contains the following fields:
-- version
-- revision
-- when
-- who
-- what
-- why
+### IEC-61850-6 hItem (Історія)
+Другою опцією є розділ «Історія» файлу SCL.
+Цей розділ є стандартним розділом SCL і містить такі поля:
+- версія
+- ревізія
+- коли
+- хто
+- що
+- чому
 
-As you can see, this can be done in combination with [versioning](#versioning-overview).
-This is enough for the basic usage that we need. For every version (every edit for example), a new hItem will be added to the SCL.
-This way, we don't need to extend the SCL by default. We can just use the standard.
+Як ви можете бачити, це може бути зроблено у комбінації з [версіонністю](#versioning-overview).
+Цього достатньо для базового використання, яке нам потрібно. Для кожної версії (наприклад, кожного редагування) до списку SCL буде додано новий елемент hItem.
+Таким чином, нам не потрібно розширювати SCL за замовчуванням. Ми можемо просто використовувати стандарт.
 
-### Final Thoughts
-The best way is to use the History section of a SCL file.
-It's flexible enough for our basic needs, so we got the version, the when, the who, etc.
+### Фінальні думки
+Найкраще використовувати секцію Історія в SCL-файлі.
+Він досить гнучкий для наших базових потреб, тому у нас є версія, коли, хто і т.д.
 
-In the future it's possible that we need to need something extra, for example an origin CIM file from conversion.
-For this we can use the W3C PROV-XML section.
-In this case, we can extend the History item with so-called 'private' data, which will be the W3C PROV-XML data.
-For more information about the private elements in the SCL structure, take a look at chapter 8.3.6 of the IEC-61850-6 standard.
+У майбутньому нам може знадобитися щось додаткове, наприклад, вихідний CIM-файл від конвертації.
+Для цього ми можемо скористатися розділом W3C PROV-XML.
+У цьому випадку ми можемо розширити елемент History так званими «приватними» даними, які будуть даними W3C PROV-XML.
+Для отримання додаткової інформації про приватні елементи в структурі SCL зверніться до глави 8.3.6 стандарту IEC-61850-6.
 
-### Sources
+### Джерела
 https://www.w3.org/TR/prov-xml

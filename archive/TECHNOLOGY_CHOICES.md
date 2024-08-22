@@ -4,241 +4,235 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Technology Choices
-The right technology choices are key to a good project.
+# Вибір технології
+Правильний вибір технології - ключ до успішного проекту.
 
-# Current Technology Choices
+# Вибір технологій на цей час
 ![Current technology choices](../images/current_technology_overview/Current_Technology_Choices_Overview.png)
 
-# Database
-These Databases are evaluated:
+# База даних
+Ці Бази даних оцінюються:
 - PostgreSQL
 - CouchDB
 - BaseX
 - eXist-db
 
-## Checks for determining database
-- Database should be able to store XML data
-- Database should be relational, because we need relations between files/pieces of files/models (not sure about this one)
-- Database must be provided with the solutions, for example part of a Docker image
-- Support must be available, in case of trouble.
-- Database must be open-source, because the whole solution must be open-source
-- Operations needs to have the ACID guarantees, because the data needs to be reliable and consistent
-- Performance isn't a big thing, but it's handy to have a database that performes quick!
-- We don't need complex queries, data retrieval is pretty flat
+## Перевірки для визначення бази даних
+- База даних повинна мати можливість зберігати XML-дані
+- База даних повинна бути реляційною, тому що нам потрібні зв'язки між файлами/частинами файлів/моделями (не впевнений щодо цього)
+- База даних повинна бути забезпечена рішеннями, наприклад, частиною образу Docker  
+- Повинна бути доступна підтримка на випадок проблем.
+- База даних повинна бути з відкритим вихідним кодом, тому що все рішення повинно бути з відкритим вихідним кодом
+- Операції повинні мати гарантії ACID, тому що дані повинні бути надійними і послідовними
+- Продуктивність не є великою проблемою, але зручно мати базу даних, яка працює швидко!
+- Нам не потрібні складні запити, пошук даних досить простий
 
 ## Document vs Relational Database
-There are basically two types of databases: Relational and No-SQL databases.
-When to choose one or another can be found on [Microsoft.com](https://docs.microsoft.com/en-us/dotnet/architecture/cloud-native/relational-vs-nosql-data).
+Існує два основних типи баз даних: Реляційні та No-SQL бази даних.
+Коли варто обирати той чи інший варіант, можна дізнатися на [Microsoft.com](https://docs.microsoft.com/en-us/dotnet/architecture/cloud-native/relational-vs-nosql-data).
 
 ## PostgreSQL
-Homepage: https://www.postgresql.org/
+Домашня сторінка: https://www.postgresql.org/
 ### Pros
-- Open Source, relational database
-- PostgreSQL does have XML functions for handling XML files (XMLTABLE)
-- XMLTABLE turns XML into a relational table format
-- Good support available
-- [Docker image](https://hub.docker.com/_/postgres) available
-- Does have XML validation when using the XML type field.
+- Відкритий вихідний код, реляційна база даних
+- PostgreSQL має функції XML для роботи з XML-файлами (XMLTABLE)
+- XMLTABLE перетворює XML у формат реляційної таблиці
+- Доступна хороша підтримка 
+- [Docker image](https://hub.docker.com/_/postgres) доступний
+- Має перевірку XML при використанні поля типу XML.
 
 ### Cons
-- Not a native XML database
+- Не місцева база даних XML
 
 ## CouchDB
-Homepage: https://couchdb.apache.org/
+Домашня сторінка: https://couchdb.apache.org/
 ### Pros
-- The one con we have is decisive.
+- Єдиний недолік, який ми маємо, є вирішальним.
 
 ### Cons
-- Cannot store XML as key/property, but as blob. This makes querying a bit challanging.
+- Не може зберігати XML як ключ/властивість, а лише як blob. Це робить запити дещо складнішими.
 
 ## BaseX
-Homepage: https://basex.org/
+Домашня сторінка: https://basex.org/
 
 ### Pros
-- Native XML database
-- Fully Open Source
-- Good license! (BSD)
-- Easy to setup using available Docker image
-- Cross-platform
-- Active community
-- Multiple API's, like REST(ful) and HTTP
+- Місцева база даних XML
+- Повністю відкритий вихідний код
+- Хороша ліцензія! (BSD)
+- Легко налаштовується за допомогою доступного образу Docker
+- Крос-платформна
+- Активна спільнота
+- Кілька API, таких як REST(ful) і HTTP
 - [ACID guarantees](https://docs.basex.org/wiki/Transaction_Management)
-- Many [usage examples](https://docs.basex.org/wiki/Clients) available in different programming languages
+- Багато [прикладів використання](https://docs.basex.org/wiki/Clients) доступних на різних мовах програмування
 
 ### Cons
-- No clear use cases using BaseX
-- Versioning is not out-of-the-box available. Need to use a second database to create 'versioning', which creates an archive database and a current database. And by using RESTXQ is relatively easy to create a versioning mechanism. BaseX gave [SirixDB](https://sirix.io/) as a good alternative in case we want a NoSQL database with versioning mechanism.
+- Немає чітких сценаріїв використання BaseX
+- Версії не доступні з коробки. Потрібно використовувати другу базу даних для створення "версійності", яка створює архівну базу даних і поточну базу даних. А за допомогою RESTXQ відносно легко створити механізм версій. BaseX пропонує [SirixDB](https://sirix.io/) як хорошу альтернативу, якщо нам потрібна NoSQL база даних з механізмом версій.
 
 ## eXist-db
-Homepage: http://exist-db.org/exist/apps/homepage/index.html
+Домашня сторінка: http://exist-db.org/exist/apps/homepage/index.html
 ### Pros
-- Native XML database
-- Fully Open Source
-- Cross-platform
-- Active community (weekly community call, Slack channels, books)
-- Docker image available
-- Multiple query languages like HTTP, REST, xQuery and xPath
-- Can act like a graph database, so relations between xml fragments for example is possible.
-- Supports XML validation (https://exist-db.org/exist/apps/doc/validation.xml)
+- Місцева база даних XML
+- Повністю відкрита
+- Кросплатформна
+- Активна спільнота (щотижневі зустрічі спільноти, канали Slack, книги)
+- Доступний образ Docker
+- Кілька мов запитів, таких як HTTP, REST, xQuery та xPath
+- Може діяти як графова база даних, тому, наприклад, можливі зв'язки між фрагментами xml
+- Підтримує валідацію XML (https://exist-db.org/exist/apps/doc/validation.xml).
 
 ### Cons
-- Using LGPL software is discouraged by Alliander when __modifying__ source code. So if we want to add features to eXist-db in the future, we might have a problem.
-- No SQL available (is this needed?)
-- Doesn't have all the ACID properties according to [vschart](http://vschart.com/compare/exist-db/vs/postgresql). Isolation is unknown, can't find other sources which confirm this.
-- Not well known, no clear use cases in production. There are some [here](http://showcases.exist-db.org/exist/apps/Showcases/index.html)
-- eXist needs JRE (Java Runtime Environment) to run
+- Alliander не рекомендує використовувати програмне забезпечення LGPL під час __модифікації__ вихідного коду. Отже, якщо ми захочемо додати функції до eXist-db у майбутньому, у нас можуть виникнути проблеми.
+- Відсутній SQL (чи потрібен він?)
+- Не має всіх властивостей ACID згідно з [vschart](http://vschart.com/compare/exist-db/vs/postgresql). Ізоляція невідома, не можу знайти інших джерел, які б це підтверджували.
+- Маловідомий, немає чітких випадків використання у виробництві. Є декілька [тут](http://showcases.exist-db.org/exist/apps/Showcases/index.html)
+- Для роботи eXist потрібне JRE (Java Runtime Environment)
 
-## Final decision
-I prefer eXist-db as the database/register for our XML data (based on what we need). It's an open source, cross-platform native XML database with an active community and all the functionality we are looking for.
+## Остаточне рішення
+Я віддаю перевагу eXist-db як базі даних/реєстру для наших XML-даних (залежно від того, що нам потрібно). Це кросплатформенна нативна XML-база даних з відкритим вихідним кодом, активною спільнотою та всіма необхідними нам функціями.
 
-A second option is using PostgreSQL. A stable, open source RDBMS which can also handle XML using the XMLTABLE functionality. But because it's not the native functionality of PostgreSQL (handling XML), I prefer a native XML database like eXist-db.
+Другий варіант - використання PostgreSQL. Стабільна СУБД з відкритим вихідним кодом, яка також може обробляти XML за допомогою функції XMLTABLE. Але оскільки це не є власною функціональністю PostgreSQL (робота з XML), я надаю перевагу власній базі даних XML, наприклад, eXist-db.
 
-My only concern is the maturity of eXist-db. I can't find good use cases of eXist-db, and I'm not sure of the stability in production for example. Let me know if someone knows some use cases, or maybe someone has experience with eXist-db.
+Єдине, що мене турбує - це зрілість eXist-db. Я не можу знайти хороших прикладів використання eXist-db, і я не впевнений в його стабільності у виробництві, наприклад. Дайте мені знати, якщо хтось знає якісь приклади використання, або, можливо, хтось має досвід роботи з eXist-db.
 
-### Licensing problems
-After discussing database choices within Alliander, eXist is indeed an option, but the license could be a problem. BaseX can do the same as eXist-db (as it seems) and has a better license for our situation (BSD).
-Also, because the idea is to have an abstract interface layer between CoMPAS and the database, people can also choose to use a different database in the future.
+### Проблеми з ліцензуванням
+Після обговорення вибору бази даних в Alliander, eXist дійсно є варіантом, але ліцензія може бути проблемою. BaseX може робити те ж саме, що і eXist-db (як здається) і має кращу ліцензію для нашої ситуації (BSD). Крім того, оскільки ідея полягає в тому, щоб мати абстрактний рівень інтерфейсу між CoMPAS і базою даних, люди також можуть вибрати іншу базу даних в майбутньому.
 
-### Is it bad BaseX doesn't have versioning out of the box?
-Because BaseX doesn't have versioning out of the box, I mailed the BaseX community about this issue. The quoted response:
+### Чи погано, що BaseX не має версій "з коробки"?
+Оскільки BaseX не має версій з коробки, я написав спільноті BaseX про цю проблему. Цитована відповідь:
 
->The existing modules of BaseX don’t provide a ready solution for versioning features, but it’s perfectly feasible to build a versioning solution with XQuery. If you use RESTXQ for storing and retrieving data, you could e.g. move the current version of documents to an archive database and replace it with the incoming new document.
+>Існуючі модулі BaseX не надають готового рішення для функцій керування версіями, але за допомогою XQuery цілком можливо створити рішення для керування версіями. Якщо ви використовуєте RESTXQ для зберігання та отримання даних, ви можете, наприклад, перемістити поточну версію документів в архівну базу даних і замінити її новим документом, що надходить.
 
-Which is fine, a second running database isn't a problem because it's a pretty light-weight database.
+Це нормально, друга запущена база даних не є проблемою, тому що це досить легка база даних.
 
 # XML Processing
-## Checks for determining XML processing
-- Can manipulate/check XML configuration files by using rules
-- Can be embedded in our solution
-- Tool must be open source
+## Перевірки для визначення обробки XML
+- Може маніпулювати/перевіряти конфігураційні файли XML за допомогою правил
+- Може бути вбудований в наше рішення
+- Інструмент має бути з відкритим вихідним кодом
 
 ## RiseClipse
 ### Pros
-- Main use is validating IEC 61850/IEC CIM configuration files, exactly what we need.
-- Usage experience within Alliander
-- [Docker image](https://hub.docker.com/r/riseclipse/riseclipse-validator-scl) available
-- Add own validation rules (in Object Constraint Language)
+- Основне використання - перевірка конфігураційних файлів IEC 61850/IEC CIM, саме те, що нам потрібно.
+- Досвід використання в Alliander
+- Доступний [Docker-образ] (https://hub.docker.com/r/riseclipse/riseclipse-validator-scl)
+- Додавання власних правил перевірки (на мові обмеження об'єктів)
 
 ### Cons
-- Development doesn't seem very active
-- Community is limited / not very active ( See [GitLab](https://gitlab-research.centralesupelec.fr/groups/RiseClipseGroup/-/activity) and [GitHub](https://github.com/riseclipse) )
+- Розробка не виглядає дуже активною
+- Спільнота обмежена / не дуже активна ( Дивиться [GitLab](https://gitlab-research.centralesupelec.fr/groups/RiseClipseGroup/-/activity) і [GitHub](https://github.com/riseclipse) )
 
 ## Schematron
 ### Pros
-- There is a XQuery library module for eXist-db (https://github.com/Schematron/schematron-exist)
-- Rule-based approach. If assertion fails, a message is being supplied
-- Based on XSLT and xPath, so very flexible in manipulating/processing XML
-- Suggesting XML fixes
-- Referencing other XML documents as constraint validation
-- XSL Processor like [Saxon-HE](http://saxon.sourceforge.net/) is easy to use
+- Існує модуль бібліотеки XQuery для eXist-db (https://github.com/Schematron/schematron-exist)
+- Підхід на основі правил. Якщо твердження не виконується, надсилається повідомлення
+- Базується на XSLT та xPath, тому дуже гнучкий у маніпулюванні/обробці XML
+- Пропонує виправлення XML
+- Посилання на інші XML-документи для перевірки обмежень
+- XSL-процесор, такий як [Saxon-HE] (http://saxon.sourceforge.net/), є простим у використанні.
 
 ### Cons
-- Not an application itself, needs a XSLT processor like [Saxon-HE](http://saxon.sourceforge.net/) which is also open-source
+- Не сам додаток, а XSLT-процесор, такий як [Saxon-HE](http://saxon.sourceforge.net/), який також має відкритий вихідний код.
 
-## Final decision
-My advice would be to use Schematron (in combination with an XSLT processor) as the XML processing tool.
-It can do what RiseClipse can do, and more (like suggesting XML fixes and it's more flexible because it works with native XML technologies). Plus, it works in combination with eXist-db. 
+## Остаточне рішення
+Я б порадив використовувати Schematron (у поєднанні з XSLT-процесором) як інструмент для обробки XML. Він може робити те саме, що й RiseClipse, і навіть більше (наприклад, пропонувати виправлення XML, і він більш гнучкий, оскільки працює з нативними XML-технологіями). Крім того, він працює в поєднанні з eXist-db. 
 
-Examples:
+Приклади:
+
 https://en.wikibooks.org/wiki/XQuery/Validation_with_Schematron#Setup_in_eXist-db
 
 https://exist-db.org/exist/apps/doc/validation
 
 https://github.com/Schematron/schematron-exist
 
-RiseClipse is also a good candidate, because it's dedicated on IEC 61850/CIM validation.
-Only thing is, it's not as flexible as using Schematron. But I really do like the combination Schematron and eXist-db/BaseX.
+RiseClipse також є хорошим кандидатом, оскільки він спеціалізується на валідації IEC 61850/CIM. Єдине, що він не такий гнучкий, як використання Schematron. Але мені дуже подобається комбінація Schematron і eXist-db/BaseX.
 
-# Microservice technology
-A good technology is key to a good microservice.
+# Технологія мікросервісу
+Хороша технологія - це ключ до хорошого мікросервісу.
 
-But be aware: it's not a definitive technology.
-Multiple microservices can have multiple technologies, that's the cool thing about microservices.
-Just create them and put them in a microservice which lives next to the other ones. By using a REST API, it can communicate with the other ones for example.
-## Checks for determining microservice technology
-- Technology should be accepted by the open source community
-- Technology should not be completely new to the community, so we can make some quick progression
-- Components should be independent deployable (for example the CIM conversion component, in case it needs an update)
-- Components should be highly observable (monitoring)
+Але майте на увазі: це не остаточна технологія. Кілька мікросервісів можуть мати кілька технологій, в цьому і є крутість мікросервісів. Просто створіть їх і помістіть в мікросервіс, який живе поруч з іншими. Наприклад, за допомогою REST API він може спілкуватися з іншими.
+
+## Перевірки для визначення технології мікросервісу
+- Технологія повинна бути прийнята спільнотою з відкритим вихідним кодом
+- Технологія не повинна бути абсолютно новою для спільноти, щоб ми могли швидко досягти певного прогресу
+- Компоненти повинні бути незалежними для розгортання (наприклад, компонент перетворення CIM, якщо він потребує оновлення)
+- Компоненти повинні бути добре відстежуваними (моніторинг)
 
 ## Quarkus
 https://quarkus.io/
 ### Pros
-- Java stack, and working experience is avaiable in the community
-- Open Source
-- Hot reload for quick development
-- Less verbose code when developing REST API's, compared to for example Java Spring
-- Tailored for GraalVM (universal VM), which is also very interesting for us (usage of resources)
-- Huge decrease of memory huge compared to traditional cloud-native stacks like Java Spring.
-- Huge decrease in response times compared to traditional cloud-native stacks like Java Spring.
-- Backed by RedHat
-- Quickly settings up microservices with REST APIs
+- Стек Java, і досвід роботи доступний у спільноті
+- Відкритий вихідний код
+- Гаряче перезавантаження для швидкої розробки
+- Менше багатослівного коду при розробці REST API, порівняно, наприклад, з Java Spring
+- Адаптований для GraalVM (універсальна ВМ), що також дуже цікаво для нас (використання ресурсів)
+- Величезне зменшення пам'яті порівняно з традиційними хмарними стеками, такими як Java Spring
+- Величезне зменшення часу відгуку порівняно з традиційними хмарними стеками, такими як Java Spring
+- Підтримується компанією RedHat
+- Швидке налаштування мікросервісів за допомогою REST API.
 
 ### Cons
-- Doesn't support full set of some EE standards, like Enterprise JavaBeans. Expected is that it's not a game breaker for us.
-- Relatively new technology, framework could contain some "rookie mistakes". On the other hand, multiple researches are stating the maturity of the framework it achieved in this short time.
+- Не підтримує повний набір деяких стандартів EE, таких як Enterprise JavaBeans.
+- Відносно нова технологія, фреймворк може містити деякі "помилки новачків". З іншого боку, численні дослідження говорять про зрілість фреймворку, якої він досяг за цей короткий час.
 
 ## Java Spring
 https://github.com/spring-projects/spring-framework
 ### Pros
-- Preferred language for Alliander
-- Lots of experience within CoMPAS community
-- Using Spring (Boot), it's very easy to quickly setup a microservice
-- Massive community
-- Java uses annotation syntax, which makes Java a great language for developing microservices in terms of readability
-- It's more mature compared to for example Spark Java, which is also an option
-- Contains great logging functionality using Logback or SLF4J for example
-- CLI available
+- Мова, якій віддають перевагу в Alliander
+- Багато досвіду в спільноті CoMPAS
+- Використовуючи Spring (Boot), дуже легко швидко налаштувати мікросервіс
+- Велика спільнота - Java використовує синтаксис анотацій, що робить Java чудовою мовою для розробки мікросервісів з точки зору читабельності
+- Вона більш зріла порівняно, наприклад, з Spark Java, яка також є варіантом
+- Містить чудову функціональність ведення журналів, використовуючи, наприклад, Logback або SLF4J - Доступний інтерфейс командного рядка (CLI)
 
 ### Cons
-- Pretty complex if you never worked with Java Spring
-- Java is pretty slow compared to the other ones
+- Досить складно, якщо ви ніколи не працювали з Java Spring
+- Java досить повільна порівняно з іншими мовами
 
 ## Go Micro
 https://github.com/micro/micro
 ### Pros
-- Great concurrency possibilities
-- Quick issue fixing by the maintainer
-- Lots of examples usages in the Go Micro repository
+- Великі можливості паралельної роботи 
+- Швидке виправлення проблем супровідником
+- Багато прикладів використання в репозиторії Go Micro
 
 ### Cons
-- Not as mature as Java Spring for example
-- Documentation is mostly source code, so maybe not as easy to read for some people
-- Errors are not always self-explaining
+- Не така зріла, як, наприклад, Java Spring
+- Документація в основному є вихідним кодом, тому може бути не такою легкою для читання для деяких людей
+- Помилки не завжди є зрозумілими
 
 ## Python Flask
 https://github.com/pallets/flask
 ### Pros
-- Python is really easy to write, quick learning curve and quick prototyping
-- The Flask framework is easy to understand compared to other technologies (not much overhead or boilerplate)
+- Python дійсно легко писати, швидке навчання та швидке створення прототипів
+- Фреймворк Flask простий у розумінні порівняно з іншими технологіями (небагато накладних витрат або шаблонів)
 
 ### Cons
-- If you never used Flask before, it needs some work to get into it
-- Flask handles requests one at a time (not async). So multiple requests take more time. If CoMPAS will have a lot of users at the same time, this might be a problem
+- Якщо ви ніколи раніше не користувалися Flask, вам доведеться трохи попрацювати, щоб освоїтися
+- Flask обробляє запити по одному (не асинхронно). Тому кілька запитів займають більше часу. Якщо в CoMPAS буде багато користувачів одночасно, це може стати проблемою
 
 ## NestJS w/ NodeJS
 https://github.com/nestjs/nest
 ### Pros
-- The main microservice platform for enterprises and startups who want to embrace microservices
-- Annotation driven, so Java developers should feel great using NestJS
-- Swagger documentation is automaticaly generated from API endpoints
-- NestJS uses the latest Typescript version, so it keeps up with the almighty Javascript world
-- CLI available
-- Monitoring ad health checks are available by using NPM.
+- Основна мікросервісна платформа для підприємств і стартапів, які хочуть використовувати мікросервіси
+- Орієнтована на анотації, тому Java-розробники повинні відчувати себе чудово з NestJS
+- Документація Swagger автоматично генерується з кінцевих точок API
+- NestJS використовує останню версію Typescript, тому йде в ногу з всемогутнім світом Javascript
+- Доступний інтерфейс CLI
+- Моніторинг стану оголошень доступний за допомогою NPM.
 
 ### Cons
-- Lack of documentation
-- Not a lot of backing power, compared to for example Go Micro (Google). So the question is how long it can live, living to huge competitors like Go Micro and Java Spring.
+- Відсутність документації
+- Не дуже велика підтримка, порівняно, наприклад, з Go Micro (Google). Тож питання в тому, як довго він зможе прожити, витримавши конкуренцію з такими великими конкурентами, як Go Micro та Java Spring.
 
-## Final decision
-Python Flask en Java Spring are very close and can both be used for our purposes.
+## Остаточне рішення
+Python Flask та Java Spring дуже близькі і обидва можуть бути використані для наших цілей.
 
-It's an advantage that there is more Java Spring experience compared to Python Flask, so the suggestion is to use Java Spring. Also based on the checks I made.
-Rob also made a Minimal Viable Product of a microservice using Java Spring and BaseX, which was very quick to setup and works very well.
+Перевагою є те, що є більше досвіду роботи з Java Spring порівняно з Python Flask, тому я пропоную використовувати Java Spring. Роб також створив мінімальний життєздатний продукт мікросервісу з використанням Java Spring і BaseX, який дуже швидко налаштовується і працює дуже добре.
 
-NestJS also looks very promising, but the lack of documentation is a game changer for me. Go Micro is also a good candidate, but the lack a maturity made me decide not to choose for Go Micro.
+NestJS також виглядає дуже багатообіцяюче, але відсутність документації є для мене переломним моментом. Go Micro також є хорошим кандидатом, але недостатня зрілість змусила мене вирішити не зупиняти свій вибір на Go Micro.
 
-When looking at the memory usage (and response times) of Quarkus, it's definitely interesting for us. Also take a look at this [comparison with Java Spring](https://simply-how.com/quarkus-vs-spring-boot-production-performance)
+Якщо поглянути на використання пам'яті (і час відгуку) Quarkus, то він, безумовно, цікавий для нас. Також погляньте на це [порівняння з Java Spring](https://simply-how.com/quarkus-vs-spring-boot-production-performance)
 
-Because CoMPAS is an application which also should run locally, memory usage is an important aspect. Together with being a modern microservice framework, backed by RedHat and being a Java framework (which we are having experience with) it's the best choice for now!
+Оскільки CoMPAS є додатком, який також повинен працювати локально, використання пам'яті є важливим аспектом. Разом з тим, що це сучасний фреймворк для мікросервісів, який підтримується RedHat і є фреймворком Java (з яким ми маємо досвід роботи), це найкращий вибір на даний момент!

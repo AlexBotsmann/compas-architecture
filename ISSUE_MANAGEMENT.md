@@ -4,44 +4,47 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-## Issue Management
-For issue management we are using the issue tracker in GitHub. Issues are created in the repository where there are related to.<br/>
-Issues that concern the whole CoMPAS project are added as issue in the repository "compas-architecture". Later these maybe be move to the correct repository.  
+## Керування проблемами
+Для керування проблемами ми використовуємо трекер проблем у GitHub. Проблеми створюються в репозиторії, де є пов’язані з ними питання.
+Питання, які стосуються всього проекту CoMPAS, додаються як питання в репозиторії "compas-architecture". Пізніше їх, можливо, буде переміщено до правильного репозиторію. 
 
-To get an overview of all the issues we are using the project board in GitHub.
-There are two overview board on organisation level to monitor all the issues and pull request in the different repositories.
-One for the issues, CoMPAS Issues Overview Board and one for the pull requests, CoMPAS Pull Request Overview Board.
-Every repository that can contain issues and pull request are linked to these two project boards.
+Щоб отримати огляд усіх проблем, ми використовуємо дошку проекту на GitHub.
+На рівні організації існує дві оглядові дошки для моніторингу всіх проблем і запитів у різних репозиторіях.
+Одна для проблем, CoMPAS Issues Overview Board, а інша для pull requests, CoMPAS Pull Request Overview Board.
+Кожен репозиторій, який може містити проблеми та запити, пов'язаний з цими двома наглядовими радами проекту.
 
-To manage this ecosystem of issues in the different repositories some automation is added to make life better.
+Для управління цією екосистемою питань у різних сховищах додається певна автоматизація, щоб полегшити життя.
 
-### Configure (new) repository
-When a new repository is created (or existing needs to be configured) some settings need to be made for the automation to work.
+### Налаштування (нового) репозиторію
+Коли створюється новий репозиторій (або потрібно налаштувати існуючий), необхідно виконати деякі налаштування, щоб автоматизація працювала.
 
-Go to the new repository and select the tab "Settings". Under settings select the item "Options". 
-Under features make sure that the option "Issues" and "Projects" are selected. 
-There should now be two new tabs "Issues" and "Projects" available to the left of "Settings".
+Перейдіть до нового репозиторію і виберіть вкладку «Settings». У налаштуваннях виберіть пункт «Options». 
+У розділі «Функції» переконайтеся, що обрано опції «Issues» та «Projects». 
+Тепер зліва від «Settings» мають з'явитися дві нові вкладки «Issues» та «Projects».
 
-Next go to the tab "Projects" and create a new project board (right top button).
-Give the project board a new name like "CoMPAS \<Project\> Board", give it a description if desired, use the template "Basic kanban".
-Now create the project board. This project board will be used to have an overview on repository level with all issues and pull requests.<br/>
-Next the project board is shown. Delete the notes that are automatically created.<br/> 
-Now for each column select "Manage automation" under the "...". Change the automation according to the table below and update the settings.
+Далі перейдіть на вкладку «Projects» і створіть нову дошку проекту (права верхня кнопка).
+Дайте дошці проекту нове ім'я, наприклад, «CoMPAS \<Project\> Board», за бажанням дайте їй опис, використовуйте шаблон «Basic kanban».
+Тепер створіть дошку проекту. Ця дошка проекту буде використовуватися для огляду на рівні репозиторію з усіма проблемами і запитами.
+Далі буде показано дошку проекту. Видаліть нотатки, які будуть створені автоматично.
 
-| To Do                        | In Progress                                 | Done                                               |
+Тепер для кожного стовпчика виберіть «КManage automation» під «...». Змініть автоматизацію відповідно до таблиці нижче і оновіть налаштування.
+
+| Зробити                        | В прогресі                                 | Зроблено                                               |
 | ---------------------------- |:-------------------------------------------:| --------------------------------------------------:|
-| Issue: Newly added, Reopened |Issue: _None_                                | Issue: Closed                                      |
-| Pull Request: Newly added    |Pull Request: Reopened, Approved by reviewer,| Pull Request: Merged, Closed with unmerged commits |
-|                              | Pending approval by reviewer                |                                                    |
+| Issue: Новододана, Знов відкрита |Issue: _None_                                | Issue: Закрита                                      |
+| Pull Request: Новододана    |Pull Request: Знов відкрита, схвалена рецензентом| Pull Request: об'єднано, закрито з не об'єднаними комітами |
+|                              | Очікує на схвалення рецензента                |                                                    |
 
-Next go the organisation overview of CoMPAS and go to the tab "Projects".<br/> 
-Now we need to link the new repository to both Project Boards. Repeat the following part for both the project boards "CoMPAS Issues Overview Board" and "CoMPAS Pull Request Overview Board".<br/>
-Don't open the board, but under "..." (end of row) select "Settings". Next go to "Linked repositories" and link the new repository using the button "Link a repository".
-the repository is now shown in the list of linked repositories.Now it's possible to also added issues and pull request to the board.
+Далі перейдіть до огляду організації CoMPAS і перейдіть на вкладку «Projects».
 
-### Add GitHub Action 
-To automatically adding issues and pull request to a project board we add a GitHub action for that. 
-In the repository create a file "automate_projects.yml" in the directory ".github/workflows" containing the following source code: 
+Тепер нам потрібно зв’язати нове сховище з обома панелями проекту. Повторіть наведену нижче частину для обох дощок проекту «Панель огляду питань CoMPAS» і «Панель огляду запитів на вилучення CoMPAS».
+Не відкривайте дошку, але під «...» (в кінці рядка) виберіть «Settings». Далі перейдіть до «Linked repositories» і прив'яжіть нове сховище за допомогою кнопки «Link a repository».
+Репозиторій з'явиться у списку прив'язаних репозиторіїв, тепер можна також додавати питання і запити на форумі.
+
+### Додати дію GitHub 
+Для автоматичного додавання питань та pull request на панель проєкту ми додамо відповідну дію на GitHub.
+
+У репозиторії створіть файл «automate_projects.yml» в директорії «.github/workflows», що містить наступний вихідний код: 
 
 ```yaml
 name: Add issues and pull request to project boards
@@ -81,44 +84,43 @@ jobs:
           GITHUB_PROJECT_URL: https://github.com/orgs/com-pas/projects/2 #(3)
           GITHUB_PROJECT_COLUMN_NAME: To do
 ```
-The GitHub action exists of 4 steps. 
-- (Step 1): Add new issues to the project board of the repository.
-- (Step 2): Add new pull requests to the project board of the repository.
-- (Step 3): Add new issues to the organisation project board "CoMPAS Issues Overview Board".
-- (Step 4): Add new pull requests to the organisation project board "CoMPAS Pull Request Overview Board".
+Дія на GitHub складається з 4 кроків. 
+- (Крок 1): Додайте нові випуски на дошку проектів сховища.
+- (Крок 2): Додайте нові запити на дошку проектів сховища.
+- (Крок 3): Додайте нові випуски на дошку проектів організації «CoMPAS Issues Overview Board».
+- (Крок 4): Додайте нові pull-запити на дошку проектів організації «CoMPAS Pull Request Overview Board».
 
-A few points:
-- (1): The URL to the project board of the repository.
-- (2): The URL to the organisation project board "CoMPAS Issues Overview Board".
-- (3): The URL to the organisation project board "CoMPAS Pull Request Overview Board".
+Кілька пунктів:
+- (1): URL до дошки проектів сховища.
+- (2): URL до проектної дошки організації «CoMPAS Issues Overview Board».
+- (3): URL до проектної дошки організації «CoMPAS Pull Request Overview Board».
 
 ### Configuration Organisation Project Board
-As mentioned already there are two project boards on organisation level, namely "CoMPAS Issues Overview Board" 
-and "CoMPAS Pull Request Overview Board". To automate more we changed some settings on the two boards.<br/> 
-Open the two boards and change the automation settings of the columns (On the column select "Manage automation" 
-under the "...") according to the tables below.
+Як вже згадувалося, на рівні організації існує дві проектні панелі, а саме «CoMPAS Issues Overview Board» та «CoMPAS Pull Request Overview Board». Для більшої автоматизації ми змінили деякі налаштування на обох панелях.
 
-Project board "CoMPAS Issues Overview Board":
+Відкрийте обидві панелі і змініть налаштування автоматизації стовпців (у стовпці виберіть «Manage automation» під кнопкою «...») відповідно до таблиць нижче.
 
-| To Do                        | In Progress                                 | Done                                               |
+Проєктна панель «CoMPAS Issues Overview Board»:
+
+| Зробити                        | В процесі                                 | Зроблено                                               |
 | ---------------------------- |:-------------------------------------------:| --------------------------------------------------:|
-| Issue: Newly added, Reopened |Issue: _None_                                | Issue: Closed                                      |
+| Issue: Новододана, Знов відкрита |Issue: _None_                                | Issue: Закрита                                      |
 | Pull Request: _None_         |Pull Request: _None_                         | Pull Request: _None_                               |
 
 
-Project board "CoMPAS Pull Request Overview Board":
+Проєктна панель "CoMPAS Pull Request Overview Board":
 
-| To Do                        | In Progress                                 | Done                                               |
+| Зробитм                        | В процесі                                 | Зроблено                                               |
 | ---------------------------- |:-------------------------------------------:| --------------------------------------------------:|
 | Issue: _None_                |Issue: _None_                                | Issue: _None_                                      |
-| Pull Request: Newly added    |Pull Request: Reopened, Approved by reviewer,| Pull Request: Merged, Closed with unmerged commits |
-|                              | Pending approval by reviewer                |                                                    |
+| Pull Request: Новододана    |Pull Request: Знов відкрита, схвалена рецензентом | Pull Request: об'єднано, закрито з не об'єднаними комітами |
+|                              | Очікує на схвалення рецензента                |                                                    |
 
-### Adding Action Secret ORG_GITHUB_ACTION_SECRET
-To access the project boards of the organization a secret ORG_GITHUB_ACTION_SECRET needs to be created.
-- First create a new personal access token from https://github.com/settings/tokens. Tokens can only be created as personal tokens.
-  The token also must have the right "admin:org". This will indirectly also set the right "write:org" and "read:org". 
-- Next create a new organisation secret from https://github.com/organizations/com-pas/settings/secrets/actions with the value of 
-  personal access token you created above. Name the secret ORG_GITHUB_ACTION_SECRET. Make it available for public repositories.
+### Додавання секрету дії ORG_GITHUB_ACTION_SECRET
+Для доступу до проектних панелей організації необхідно створити секретний токен ORG_GITHUB_ACTION_SECRET.
+- Спочатку створіть новий персональний токен доступу з https://github.com/settings/tokens. Токени можуть бути створені тільки як особисті токени.
+  Токен також повинен мати права «admin:org». Це опосередковано також встановить права «write:org» і «read:org». 
+- Далі створіть новий секрет організації з https://github.com/organizations/com-pas/settings/secrets/actions зі значенням 
+  персонального токену доступу, який ви створили вище. Назвіть секрет ORG_GITHUB_ACTION_SECRET. Зробіть його доступним для публічних сховищ.
 
-Now the action can use this secret to add the issues and pull request to the project boards of the organization.
+Тепер акція може використовувати цей секрет для додавання питань і pull request на дошки проєктів організації.

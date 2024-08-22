@@ -4,27 +4,20 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-## Proposal for Generic Components
+## Пропозиція щодо загальних компонентів
 
-There is a discussion about which technology can be used, because not all companies are allowed to use the proposed 
-technology choices Quarkus. But for some companies Quarkus is a needed technology to make the footprint smaller.
+Існує дискусія щодо того, яку технологію можна використовувати, оскільки не всім компаніям дозволено використовувати запропоновані Quarkus варіанти технологій. Але для деяких компаній Quarkus є необхідною технологією, щоб зменшити вплив на навколишнє середовище.
 
-To make the code be used by as many companies as possible we can decide to set some ground-rules which libraries can 
-be used in different part of the service. Below is an example out of which modules a service can be build. 
+Для того, щоб код міг бути використаний якомога більшою кількістю компаній, ми можемо вирішити встановити деякі основні правила, які бібліотеки можуть бути використані в різних частинах сервісу. Нижче наведено приклад того, з яких модулів можна побудувати сервіс.
 
 ![Component Diagram](images/CoMPAS-GenericComponent-Diagram.png)
 
-For instance the SCL Data Service has a Quarkus REST Module, which uses the Service and Repository Module.
-Every module is build and published separately. These artifacts can be used in custom implementations. 
-The default runtime container will use Quarkus with a REST Interface as implementation, but a company-specific 
-implementation can be build, for instance with Spring, but still uses larger parts of the module. 
+Наприклад, служба даних SCL має модуль Quarkus REST, який використовує модуль сервісу і репозиторію. Кожен модуль збирається і публікується окремо. Ці артефакти можна використовувати у власних реалізаціях. 
+Контейнер виконання за замовчуванням використовує Quarkus з інтерфейсом REST як реалізацію, але специфічна для компанії реалізація може бути побудована, наприклад, за допомогою Spring, але все одно використовуватиме більші частини модуля.
 
-For instance Quarkus is using the standard Jakarta EE, so a lot of work is done out-of-the-box.
-Quarkus will use jandex to know which beans are available to be used. But like Spring there can also be 
-a configuration class to produce beans that are not indexed or even have bean annotations.
+FQuarkus використовує стандартний Jakarta EE, тому багато роботи виконується "з коробки". Quarkus використовує jandex, щоб дізнатися, які боби доступні для використання. Але, як і у Spring, можна також створити клас конфігурації для створення бобів, які не індексуються або навіть не мають анотацій до бобів.
 
-Spring is using its own annotations, so some extra configuration is always needed to create all necessary bean
-in a Spring Configuration class. Below is an example how to create a bean from a standard Java class.
+Spring використовує власні анотації, тому завжди потрібна додаткова конфігурація для створення всіх необхідних бобів у класі Spring Configuration. Нижче наведено приклад, як створити боб зі стандартного класу Java.
 ```
 @Configuration
 public class ServiceConfiguration {
@@ -36,5 +29,4 @@ public class ServiceConfiguration {
 }
 ```
 
-Because we are only using standard Java and Jakarta class both implementations (Spring and Quarkus) can be 
-used to run the standardized classes.
+Оскільки ми використовуємо лише стандартні класи Java і Jakarta, обидві реалізації (Spring та Quarkus) можуть бути використані для запуску стандартних класів.

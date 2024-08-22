@@ -4,50 +4,48 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Tools Choices
-The right tool choices are key to a good project.
-# CI/CD tool
-These build tools are evaluated:
+# Вибір інструментів
+Правильний вибір інструментів - ключ до успішного проекту.
+# CI/CD інструменти
+Ці інструменти збірки оцінюються:
 - Github Actions
 - Travis CI
 - Jenkins
 
-## Checks for determining CI/CD tool
-- Must be available to the community
-- No/less maintenance
-- Integratable with Github (because that's where our repositories are)
+## Перевірки для визначення інструменту CI/CD
+- Має бути доступним для спільноти
+- Без/з меншим обслуговуванням
+- Інтегрований з Github (тому що саме там знаходяться наші репозиторії)
 
-## Github Actions
+## Дії на Github
 ### Pros
-- Upcoming tool, really active in developing
-- Free tool for public Github repositories (which CoMPAS is)
-- Integrates perfectly with Github repositories
+- Майбутній інструмент, що активно розробляється
+- Безкоштовний інструмент для публічних репозиторіїв Github (яким є CoMPAS)
+- Ідеально інтегрується з репозиторіями Github
 
 ### Cons
-- Software is proprietary
-- Adoption is growing within Alliander
+- Програмне забезпечення є пропрієтарним
+- Прийняття зростає в межах Alliander
 
 ## Travis CI
 ### Pros
-- Very much used CI/CD tool for Open Source projects
+- Дуже поширений інструмент CI/CD для проектів з відкритим кодом
 
 ### Cons
-- Not used within Alliander, so no experience or know-how
-- No advantages compared to the other evaluated tools
+- Не використовується в рамках Alliander, тому немає досвіду або ноу-хау
+- Немає переваг порівняно з іншими оцінюваними інструментами
 
 ## Jenkins
 ### Pros
-- Lots of experience within Alliander
-- Well known in the industry of Software automation
+- Великий досвід роботи в Alliander
+- Добре відомий в галузі автоматизації програмного забезпечення
 
 ### Cons
-- Not easy to make public (which is what we want)
-- Security of Jenkins often has security leaks
-- Jenkins is being replaced within Alliander
+- Нелегко оприлюднити (чого ми й прагнемо)
+- Безпека Дженкінса часто має витоки інформації
+- Дженкінса замінюють в Alliander
 
 ## Advice
-Github Actions is the way to go for us.
+Github Actions - це те, що нам потрібно.
 
-Because we host our repositories in Github, Github Actions is easily integratable, free and very flexible.
-We can use it in combination with SonarCloud for example for static code analysis.
-And above all, everyone can access it.
+Оскільки ми розміщуємо наші репозиторії на Github, Github Actions легко інтегрується, є безкоштовним і дуже гнучким. Ми можемо використовувати його в поєднанні з SonarCloud, наприклад, для статичного аналізу коду. І, перш за все, кожен може отримати до нього доступ.

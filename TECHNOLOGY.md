@@ -4,163 +4,163 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Technology
+# Технологія
 
-This page lists the technologies and tools chosen for the project
+На цій сторінці перераховані технології та інструменти, вибрані для проєкту
 
 ![Current technology choices](./images/current_technology_overview/Current_Technology_Choices_Overview.png)
 
-# Technology Choices
-## Programming language - Java
-Java 17 is chosen as programming language. 
-- Java is well known in the energy sector
-- Developers are available
-- Java is familiar within LFE projects
+# Вибори Технологій
+## Мова програмування - Java
+В якості мови програмування обрано Java 17.
+- Java добре відома в енергетиці
+- Розробники доступні
+- Java знайома в проектах LFE
 
-## Java build environment - Maven
-For building the applications we use Maven. Maven is good supported in CI/CD.
+## Java середа розробки - Maven
+Для створення програм ми використовуємо Maven. Maven добре підтримується в CI/CD.
 
-## Microservice deployment - Docker
-Microservices are deployed as Linux based Docker container. Advantages of deployment in Docker container:
+## Розгортання мікросервісів у Docker
+Мікросервіси розгортаються як контейнер Docker на базі Linux. Переваги розгортання в контейнері Docker:
 
-- Deployment is independent of deployment platform/OS
-- Well supported for cloud deployment
-- Tooling readily available
-- Open source
-- Scalable, redundant
-- Images can be distributed easily
+- Розгортання не залежить від платформи розгортання/ОС
+- Добре підтримується для хмарного розгортання
+- Доступні інструменти
+- Відкритий код
+- Масштабований, резервований
+- Образи можна легко поширювати
 
 
-## Database - BaseX
-For the database BaseX](https://basex.org/) is chosen on following arguments:
+## База даних - BaseX
+База даних [BaseX](https://basex.org/) обрана за слідуючима аргументами:
 
 **Pros**
-- Native XML database
-- Fully Open Source
-- BSD license
-- Easy to setup using available Docker image
-- Cross-platform available
-- Active community
-- Multiple API's, like REST(ful) and HTTP
+- Місцева база даних XML 
+- Повністю відкриті джерела
+- BSD ліцензія
+- Легко встановлювати використовуючи доступні Образи Docker
+- Доступна кросплатформність
+- Активна спільнота
+- Множина API, таких як REST(ful) і HTTP
 - [ACID guarantees](https://docs.basex.org/wiki/Transaction_Management)
-- Many [usage examples](https://docs.basex.org/wiki/Clients) available in different programming languages
+- Багато [прикладів використовування](https://docs.basex.org/wiki/Clients) доступно на різних мовах програмування
 
 **Cons**
-- No clear use cases using BaseX
-- Versioning is not out-of-the-box available. Need to use a second database to create 'versioning', which creates an archive database and a current database. And by using RESTXQ is relatively easy to create a versioning mechanism. BaseX gave [SirixDB](https://sirix.io/) as a good alternative in case we want a NoSQL database with versioning mechanism.
+- Немає чітких випадків використання BaseX
+- Контроль версій не доступний із коробки. Необхідно використовувати другу базу даних для створення «керування версіями», що створює архівну базу даних і поточну базу даних. І за допомогою RESTXQ відносно легко створити механізм керування версіями. [SirixDB](https://sirix.io/) буде гарна альтернатива BaseX, якщо нам потрібна база даних NoSQL із механізмом керування версіями.
 
 ## XML Processing 
-### XML Validation
+### XML Валідація
 
 **Schematron**
 
-SCL XSD is the base schema for the SCL file validation. Even though, with XSD 1.1, it's somehow possible to define co-occurrence constraints with tags "key", "keyref" (combined with xpath selector) and restriction rules with "assert" (within a type definition), that is not enough to expressed complex and custom business logics. 
+SCL XSD є базовою схемою для перевірки файлу SCL. Незважаючи на те, що з XSD 1.1 якимось чином можна визначити обмеження спільного входження за допомогою тегів "key", "keyref" (у поєднанні з селектором xpath) і правила обмеження за допомогою "assert" (у визначенні типу), цього недостатньо для виражена складна та індивідуальна бізнес-логіка.
 
-Schematron is a rule-based validation language for making assertions about the presence or absence of patterns in XML trees. One doesn't need heavy environment to use Schematron. 
-Schematron is XML, uses xml technologies (XPATH) and is very straightforward (less than seven basic elements)
-It has features for XML processing that other schema validators don't have:
-- inter-document constraints validation, 
-- hint to fix file under validation.
-- Phase/Profile validation
-- Abstract rules definition that can be extended (inheritance)
-- Embeddable in XSD and Relax NG schema
-- etc.
+Schematron — це мова перевірки на основі правил для створення тверджень про наявність або відсутність шаблонів у деревах XML. Для використання Schematron не потрібне важке середовище.
+Schematron — це XML, використовує технології xml (XPATH) і дуже простий (менше семи основних елементів)
+Він має функції обробки XML, яких немає в інших валідаторах схем:
+- перевірка міждокументних обмежень,
+- підказка для виправлення файлу під перевіркою.
+- Перевірка фази/профілю
+- Визначення абстрактних правил, які можна розширити (успадкування)
+- Можливість вбудовування в схему XSD і Relax NG
+- тощо.
 
-It's optimally used in combination with XML schema (XSD, RELAX NG). 
+Оптимально використовувати в поєднанні зі схемою XML (XSD, RELAX NG).. 
 
-### Java frameworks for XML processing
+### Java frameworks для XML processing
 **Pros JAXB**
-- JAXB (Java Architecture for XML Binding) is a framework that allow mapping Java classes to XML representations
-- Memory efficient (for more information, take a look at the comparison in [CIM - 61850 Mapping technologies](archive/CIM_61850_MAPPING_MVP.md))
-- Uses the XJC tool available in the JDK, that compiles an XML schema file into Java classes annotated with JAXB annotations suitable for (un)marshalling. This way, a XML file can be easily build by inserting data into the models.
+- JAXB (Java Architecture for XML Binding) це фреймворк, який дозволяє відображати класи Java на представлення XML
+- Ефективне використовування пам'яті (більше інформації можна переглянути в порівнянні з [CIM - 61850 Mapping technologies](archive/CIM_61850_MAPPING_MVP.md))
+- Використовує XJC інструменти, що доступні на JDK, який компілює файл схеми XML у класи Java, анотовані анотаціями JAXB, придатними для (не)маршалінгу. Таким чином файл XML можна легко створити, вставивши дані в моделі.
 
 **Cons JAXB**
-- JAXB was part of the Java language, but has been removed from the language since Java version 11. To use it, you have to add an extra dependency.
-- Dealing with large documents is not straightforward (cf. [JAXB user guide](https://javaee.github.io/jaxb-v2/doc/user-guide/ch03.html#unmarshalling-dealing-with-large-documents).) 
+- JAXB була частиною мови Java, але видалена з мови починаючи від Java version 11. Щоб використовувати його, вам потрібно додати додаткову залежність.
+- Працювати з великими документами непросто (cf. [JAXB user guide](https://javaee.github.io/jaxb-v2/doc/user-guide/ch03.html#unmarshalling-dealing-with-large-documents).) 
 
-### Java libraries for schematron
+### Бібліотеки Java для schematron
 
 - [schematron-ant](https://github.com/Schematron/ant-schematron)
 - [schematron-basex](https://github.com/Schematron/schematron-basex)
 - [schematron-exist](https://github.com/Schematron/schematron-exist)
 - [ph-schematron](https://github.com/phax/ph-schematron/wiki)
-- [apache camel](https://camel.apache.org/components/3.7.x/schematron-component.html) for enterprise integration pattern environment
+- [apache camel](https://camel.apache.org/components/3.7.x/schematron-component.html) для корпоративної інтеграції шаблонного середовища
 
-**Other supports for Schematron specification**
+**Інші підтримки для техничних характеристик Schematron**
 
 - [lxml](https://lxml.de/) (Python library)
 - libxml2 (C XML library)
 
-### RDF4J for IEC CIM configuration files 
+### RDF4J для IEC CIM файлів конфігурації 
 
 **Pros RDF4J**
-- Java library for querying RDF(XML) files
-- Well known in the Java community
-- Not having to re invent the wheel of processing incoming IEC CIM configuration files
+- Бібліотека Java для запиту RDF(XML) файлів
+- Добре відома у Java спільноті
+- Не потрібно "винаходити колесо" для обробки вхідних файлів конфігурації IEC CIM
 
 **Cons RDF4J**
-- If you don't have experience with triples, it might take a while before understanding it all.
+- Якщо у вас немає досвіду роботи з трійками, може знадобитися деякий час, перш ніж усе це зрозуміти.
 
 ### MapStruct
 
-MapStruct is a Java framework to do bean mapping. MapStruct is for instance used in the CIM Mapping for mapping data
-between CIM classes and IEC 61850 classes. More information can be found on https://mapstruct.org/.
+MapStruct це Java framework щоб робити мепінг даних. MapStruct, наприклад, використовується в CIM Mapping для відображення даних
+між CIM класами та IEC 61850 класами. Більше інформації можна знайти на https://mapstruct.org/.
 
 **Pros**
-- Mapping done in a separate interface (Mapper interface) with annotations
-- Active project on [GitHub](https://github.com/mapstruct/mapstruct)
-- MapStruct project is aware of Quarkus, see this [article](https://mapstruct.org/news/2019-12-06-mapstruct-and-quarkus/)
-- Integration with all kind of [IDEs](https://mapstruct.org/documentation/ide-support/)
-- Performance also seems to be fast, because no Reflection used, but a generated classes. 
-  [Baeldung Overview](https://www.baeldung.com/java-performance-mapping-frameworks)
+- Мепінг виконується на розділеному інтерфейсі (Mapper interface) з анотаціями
+- Актиний проєкт на [GitHub](https://github.com/mapstruct/mapstruct)
+- MapStruct проєкт знає Quarkus, дивиться цю [статтю](https://mapstruct.org/news/2019-12-06-mapstruct-and-quarkus/)
+- Інтеграція з усіма видами [IDEs](https://mapstruct.org/documentation/ide-support/)
+- Продуктивність також здається високою, оскільки не використовується відображенння, а згенеровані класи. 
+[Baeldung Overview](https://www.baeldung.com/java-performance-mapping-frameworks)
 
 **Cons**
-- Needs an annotation processor in Maven to generate the classes from the interface
+- Для створення класів з інтерфейсу потрібен процесор анотацій у Maven
 
 ## Java framework - Quarkus
-For the framework to be used with Java we choose [Quarkus](https://quarkus.io/).
+Для фреймворка що буде використовуватися з Java ми вибрали [Quarkus](https://quarkus.io/).
 
 **Pros**
-- Java stack, and working experience is available in the community
-- Open Source
-- Hot reload for quick development
-- Less verbose code when developing REST API's, compared to for example Java Spring
-- Tailored for GraalVM (universal VM), which is also very interesting for us (usage of resources)
-- Huge decrease of memory huge compared to traditional cloud-native stacks like Java Spring.
-- Huge decrease in response times compared to traditional cloud-native stacks like Java Spring.
-- Backed by RedHat
-- Quickly settings up microservices with REST APIs
+- Стек Java, досвід роботи доступний у спільноті
+- Відкритий код
+- Гаряче перезавантаження для швидкого розвитку
+— Менш докладний код під час розробки REST API, порівняно, наприклад, з Java Spring
+- Спеціально для GraalVM (універсальна віртуальна машина), що також дуже цікаво для нас (використання ресурсів)
+— Значне зменшення обсягу пам’яті порівняно з традиційними хмарними стеками, такими як Java Spring.
+- Величезне скорочення часу відповіді порівняно з традиційними хмарними стеками, такими як Java Spring.
+- За підтримки RedHat
+- Швидке налаштування мікросервісів за допомогою REST API
 
-When looking at the memory usage (and response times) of Quarkus, it's definitely interesting for us. Also take a look at this [comparison with Java Spring](https://simply-how.com/quarkus-vs-spring-boot-production-performance)
+Дивлячись на використання пам’яті (і час відгуку) Quarkus, це безперечно цікаво для нас. Подивіться також на це [порівняння з Java Spring](https://simply-how.com/quarkus-vs-spring-boot-production-performance)
 
-Because CoMPAS is an application which also should run locally, memory usage is an important aspect. Together with being a modern microservice framework, backed by RedHat and being a Java framework (which we are having experience with) it's the best choice for now!
+Оскільки CoMPAS — це програма, яка також має працювати локально, використання пам’яті є важливим аспектом. Разом з тим, що він є сучасним мікросервісним фреймворком із підтримкою RedHat і є фреймворком Java (з яким у нас є досвід), це найкращий вибір на даний момент!
 
 **Cons**
-- Doesn't support full set of some EE standards, like Enterprise JavaBeans. Expected is that it's not a game breaker for us.
-- Relatively new technology, framework could contain some "rookie mistakes". On the other hand, multiple researches are stating the maturity of the framework it achieved in this short time.
-- Not many developers are acquainted with Quarkus compared to e.g. the [Spring framework](https://spring.io/).
+- Не підтримує повний набір деяких стандартів EE, як-от Enterprise JavaBeans. Очікувано, що для нас це не порушує гру.
+- Відносно нова технологія, фреймворк може містити деякі «початкові помилки». З іншого боку, численні дослідження стверджують зрілість рамок, досягнутих за цей короткий час.
+- Небагато розробників знайомі з Quarkus порівняно з, напр. [Spring framework](https://spring.io/).
 
-## Source control - GitHub
-We choose GitHub for source control. This is good practice for open source development. 
-The CoMPAS repositories can be found at [https://github.com/com-pas/](https://github.com/com-pas/) 
+## Контроль джерел - GitHub
+Ми обрали GitHub для контролю джерел. Це добра практика для відкритої розробки. 
+Репозиторії CoMPAS можна знайти на [https://github.com/com-pas/](https://github.com/com-pas/) 
 
 ## CI/CD - GitHub actions
-We choose [GitHub Actions](https://github.com/features/actions) as mechanism for CI/CD. 
+Ми обрали [GitHub Actions](https://github.com/features/actions) як механізм для CI/CD. 
 
 **Pros**
-- Upcoming tool, really active in developing
-- Free tool for public GitHub repositories (which CoMPAS is)
-- Integrates perfectly with GitHub repositories
+- Майбутній інструмент, який дійсно активно розвивається
+- Безкоштовний інструмент для загальнодоступних сховищ GitHub (яким є CoMPAS)
+- Ідеально інтегрується з репозиторіями GitHub
 
 **Cons**
-- Software is proprietary
-- Adoption is growing within Alliander
+- Програмне забезпечення є фірмовим
+- У співрозробників зростає кількість адоптацій
 
 
 
-# Tool advise
-This section lists the development tooling that is *advised*. Of course developers are free to use their own development tooling
+# Рекомендація засобів
+У цьому розділі наведено *рекомендовані* засоби розробки. Звичайно, розробники можуть вільно використовувати власні засоби розробки
 
 ## SDE - Microsoft Visual Studio Code
-[Microsoft Visual Studio Code](https://code.visualstudio.com/) is a versatile development environment supporting many languages. 
+[Microsoft Visual Studio Code](https://code.visualstudio.com/) це універсальне середовище розробки, що підтримує багато мов. 
 

@@ -4,94 +4,94 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-## High Level CoMPAS Requirements
+## Вимоги CoMPAS висогого рівня
 
-This page presents the high level requirements for the CoMPAS project.
-Together with the Technical Architecture, it should be possible to make the correct technology choices related to the requirements.
+На цій сторінці представлені вимоги високого рівня для проєкту CoMPAS.
+Разом з технічною архітектурою, повинна бути можливість зробити правильний вибір технології, пов'язаний з вимогами.
 
-### System configuration
- - CoMPAS must provide “System Specification Description (SSD)” to “Substation Configuration Description (SCD)” conversion
- - PACS policy registry 
- - API to vendor specific IED configurators
- - Provenance (e.g. by using W3c PROV and/or SCL history)
- - CoMPAS must provide an Audit trail
+### Налаштування системи
+ - CoMPAS має забезпечити перетворення «Опис специфікації системи (SSD)» на «Опис конфігурації підстанції (SCD)»
+ - Реєстр політик PACS 
+ - API до конфігураторів IED конкретного постачальника
+ - підтвердження походження (наприклад, за допомогою W3c PROV та/або історії SCL)
+ - CoMPAS повинен забезпечити аудиторський слід 
 
-### IEC61850 profile management
- - logical device/function builder
- - library of common profiles for usual functions
- - versioning of IEC-61850 formats, like ICDs, SCL's and NSD's.
- - definition of reusable user profile of IEC 61850 data model (potentially continue/restart ENTSO-E profiling tool)
+### Керування профілем IEC61850 
+ - конструктор логічних пристроїв/функцій
+ - бібліотека загальних профілів для звичайних функцій
+ - версіонування форматів IEC-61850, таких як ICD, SCL та NSD.
+ - визначення багаторазового профілю користувача моделі даних IEC 61850 (потенційно продовження/перезапуск інструменту профілювання ENTSO-E)
 
-### IEC-61850 SCL verification
- - Conformity verification of System Configuration description Language (SCL) files
+### IEC-61850 SCL перевірка
+ - Перевірка відповідності файлів мови опису конфігурації системи (SCL)
 
-### System specification
- - profile to “System Specification Description (SSD)” conversion
- - PACS policy registry (scripts?)
- - API to vendor specific “IED Capability Description (ICD)” tools (not in direct scope, Nice To)
- - ICD/SCD conformity check
- - ICD/SCD compatibility management
- - ICD/SCD versioning / repository
+### Системні характеристики
+ - профіль у «Опис специфікації системи (SSD)» перетворення
+ - Реєстр політик PACS (скрипти?)
+ - API до специфічних інструментів «IED Capability Description (ICD)» від постачальника (не входить у пряму сферу застосування, але з радістю)
+ - Перевірка відповідності ICD/SCD
+ - Управління сумісністю ICD/SCD
+ - Управління версіями/репозиторієм ICD/SCD
 
-### PACS Availability
- - Availability of Substation PACS data at enterprise level (Functions & settings, operational process data)
+### PACS доступність
+ - Доступність даних PACS підстанції на рівні підприємства (функції та налаштування, дані операційних процесів)
 
-### Mapping functions between CIM and IEC 61850
- - Convert a CIM single line diagram into IEC61850 SLD
+### Функції зіставлення між CIM та IEC 61850
+ - Перетворення однолінійної діаграми CIM в IEC61850 SLD
 
-### Compare functions
- - Compare configurations (ICDs for example)
+### Функції порівняння
+ - Порівняйте конфігурації (наприклад, ICD)
 
-### Security requirements
-- Docker images must be signed
-- At the stage of CI/CD the code integrity must be validated
-- Data regarding substation configuration must be regarded as confidential. Data stored, processed or in transit must be protected against data disclosure and tampering.
-- Configuration files could be signed
+### Вимоги безпеки
+- Докер-образи повинні бути підписані
+- На етапі CI/CD має бути перевірена цілісність коду
+- Дані про конфігурацію підстанції повинні розглядатися як конфіденційні. Дані, що зберігаються, обробляються або передаються, повинні бути захищені від розголошення і несанкціонованого втручання.
+- Файли конфігурації можуть бути підписані
 
-### Non-functional Requirements
+### Нефункціональні вимоги
 
- - A User Manual must be provided, including Javadocs
- - System Documentation must be provided
- - How do we handle event failures?
- - Response times (output)
- - Processing times (input)
- - Timeouts for processing
- - Access levels / Role based access
- - Access permissions for certain application parts
- - Scalability of the application (use case: size of the SCL files)
- - How to handle log files (rotating?)
- - Deployment models
- - Cross platform compatibility
+ - Має бути наданий посібник користувача, в тому числі у форматі Javadoc
+ - Повинна бути надана системна документація
+ - Як ми обробляємо збої подій?
+ - Час відгуку (вихід)
+ - Час обробки (вхід)
+ - Тайм-аути для обробки
+ - Рівні доступу / Доступ на основі ролей
+ - Дозволи доступу для певних частин програми
+ - Масштабованість програми (приклад використання: розмір SCL-файлів)
+ - Як обробляти файли журналів (обертання?)
+ - Моделі розгортання
+ - Сумісність з різними платформами
  
- ## 61850 Requirements
-Requirements based on IEC 61850-6 10.2 System configurator
+ ## Вимоги стандарту 61850
+Вимоги на основі IEC 61850-6 10.2 Конфігуратор системи
 
-The SSD describes the one-line diagram and the automation functions
-  -	Essential - make corrections = CRUD operations on any item, or sets of items, preserving referential integrity
-  -	Nice to have :  visualize this on a diagram  = requires extensions for graphics plus pan/zoom/layering features
-
-
-The SSD will describe the communications devices
-  -	 Essential – import ICD, CID, IID files of various versions and compile composite DataTypeTemplates for the client(s)
-  -	 Delete devices and all associated relationships
-  -	 Edit IP addresses
-  -	 Nice to have :  visualize this on a diagram  = requires pan/zoom/layering features
+У SSD описано однолінійну діаграму і функції автоматизації
+  - Важливо - вносити виправлення = CRUD-операції над будь-яким елементом або наборами елементів, зберігаючи цілісність посилань
+  - Приємно мати: візуалізувати це на діаграмі = вимагає розширень для графіки плюс функції панорамування/масштабування/шарування
 
 
-The SCD describes the binding (mapping) between the required LNs per equipment/function
-  -	Assign / unassign / reassign LNs from IEDs to equipment
-  -	Per IED, show/ edit data set definitions
-  -	Per IED, show / edit report control block definitions
+SSD буде описувати комунікаційні пристрої
+  - Essential - імпортуйте файли ICD, CID, IID різних версій та скомпілюйте складені шаблони DataTypeTemplates для клієнта(ів)
+  - Видалення пристроїв та всіх пов'язаних з ними зв'язків
+  - Редагувати IP-адреси
+  - Корисно мати: візуалізувати це на діаграмі = вимагає функцій панорамування/масштабування/шарування
 
 
-Export functions
-  -	Export SCD in appropriate version for clients
-  -	Nice-to-have: export subset per IED in appropriate version (i.e. ICD + goose subscription information)/(IEC 61850-6 says this is an IED configurator function)
+SCD описує зв'язок (мапування) між необхідними LN для кожного обладнання/функції
+  - Призначати / скасовувати / перепризначати LN з IED на обладнання
+  - Для кожного IED - перегляд/редагування визначень наборів даних
+  - Для кожного IED - перегляд/редагування визначень блоків управління звітами
 
-IEC 61850-6 Table G.2 – System configurator conformance statement  has three pages of function headings some of which are complex
+
+Функції, що експортуються
+  - Експорт SCD у відповідній версії для клієнтів
+  - Корисно мати: експорт підмножини для кожного IED у відповідній версії (тобто ICD + інформація про підписку goose)/(IEC 61850-6 каже, що це функція конфігуратора IED)
+
+IEC 61850-6 Таблиця G.2 - Заява про відповідність системного конфігуратора має три сторінки заголовків функцій, деякі з яких є складними
 
 
-## References
+## Посилання
 - [ISO25000 standard for software and data quality](https://iso25000.com/)
 - [A basic non functional requirements checklist](https://dalbanger.wordpress.com/2014/01/08/a-basic-non-functional-requirements-checklist/)
 - [10 Examples for Non-Functional Requirements](http://www.it-checklists.com/Examples_nonfunctional_Requirements.html)

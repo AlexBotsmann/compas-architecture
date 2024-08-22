@@ -4,89 +4,89 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-## Functional architecture
+## Архітектура функціоналу
 
-### Introduction
-This page describes the functional architecture of CoMPAS. CoMPAS provides software components related to IEC 61850 model implementation, specifically for power system profile management and configuration of a power system Protection Automation and Control System (PACS). It describes the logical decomposition.
+### Введення
+Ця сторінка описує функціональну архітектуру CoMPAS. CoMPAS надає програмні компоненти, пов'язані з реалізацією моделі IEC 61850, зокрема, для управління профілем енергосистеми та конфігурації системи автоматизації та управління захистом енергосистеми (PACS). Він описує логічну декомпозицію.
 
-### The IEC61850 standard
-The IEC61850 series are  standards and documents describing the communication protocol between different equipments in a substation. It provides services and requirements for designing and deploying substation automation. It improves power quality, operation cost and maintenance activities within a substation.
+### Стандарт IEC61850
+Серія IEC61850 - це стандарти та документи, що описують протокол зв'язку між різним обладнанням на підстанції. Вони надають послуги та вимоги для проектування і розгортання автоматизації підстанцій. Це покращує якість електроенергії, знижує експлуатаційні витрати та спрощує технічне обслуговування підстанції.
 ![CoMPAS functional block diagram](./functional-diagrams/61850flow.png)
 
-| Process | Description |
+| Процес | Опис |
 | --- | --- |
-| **Specify IED** | With this process the Utility specifies the required IED in an ISD file. This profile is input for the manufacturer to deliver the required IED |
-| **Specify Substation System** | With this process the Utility specifies the substation system in an SSD file. For example, this specification may be done based on CIM data existing with the Utility |
-| **Configuration Substation System** | With this process the Utility configures the substation. This results in the SCD file. Additional inputs for this process are the IID file (IED configuration) and SED file (interfacing with other projects) |
-| **Configure IED** | The process of configuring the IED. This results in an instantiated IED IID file. The process is manufacturer specific. It results in either an ICD file or IID file. It is used to convert the SCD to a manufacturer specific CID file to be sent to the IED |
-| **Test** | The fully configured IED can be tested against the SCD and SSD files |
-| **Convert CIM/GIS to IEC61850 SLD** | CIM or GIS can be used to convert to 61850 configuration files |
+| **Specify IED** | Під час цього процесу утиліта визначає необхідний IED у файлі ISD. Цей профіль є вхідними даними для виробника, щоб доставити необхідний IED |
+| **Specify Substation System** | Під час цього процесу Утиліта визначає характеристики системи підстанції у файлі SSD. Наприклад, ці характеристики може бути виконані на основі даних CIM, наявних в Утиліті |
+| **Configuration Substation System** | Під час цього процесу утиліта конфігурує підстанцію. Результатом є файл SCD. Додатковими вхідними даними для цього процесу є файл IID (конфігурація IED) та файл SED (взаємодія з іншими проектами).) |
+| **Configure IED** | Процес конфігурації IED. Результатом цього процесу є інстанційований файл ідентифікатора IED. Процес залежить від виробника. Результатом є або файл ICD, або файл IID. Використовується для перетворення SCD у файл CID конкретного виробника, який надсилається на IED |
+| **Test** | Повністю сконфігурований IED можна протестувати за допомогою файлів SCD та SSD |
+| **Convert CIM/GIS to IEC61850 SLD** | CIM або GIS можна використовувати для конвертації у файли конфігурації 61850 |
 
-Refer to the [Glossary](GLOSSARY.md) for the abbreviations and various 61850 file types.
+Зверніться до [Глосарію](GLOSSARY.md) для ознайомлення зі скороченнями та різними типами файлів 61850.
 
-The green indicated process are in scope for CoMPAS.
+Зеленим кольором позначено процеси, що входять до сфери застосування CoMPAS.
 
-### CoMPAS architecture
-#### Context
+### Архітектура CoMPAS
+#### Контекст
 ![CoMPAS context diagram](./functional-diagrams/context.png)
 
-The diagram shows the context of CoMPAS. CoMPAS offers a set of IEC61850 services disclosed by a REST API that can be used to create tooling for specification, configuration, deployment and testing of substations.
+На схемі показано контекст CoMPAS. CoMPAS пропонує набір сервісів IEC61850, що розкриваються за допомогою REST API, які можуть бути використані для створення інструментарію для специфікації, конфігурації, розгортання та тестування підстанцій.
 
-#### First level of decomposition
+#### Перший рівень розкладання
 ![CoMPAS context diagram](./functional-diagrams/1stLevelDecomposition.png)
 
-This diagram shows the services within CoMPAS. Currently following (micro)services are provisioned:
+На цій діаграмі показано послуги, що надаються в рамках CoMPAS. Наразі надаються наступні (мікро)сервіси:
 
-| Service | Description |
+| SСервіс | Опис |
 | --- | --- |
-| [**CIM to SSD Mapper**](CIM_61850_MAPPING.md) |  A service that maps a CIM representation of a substation to an IEC61850 System Specification Description (SSD) file |
-| **CoMPAS Configuration Manager** | Example configuration tool, as web page, based on [OpenSCD](https://github.com/openscd/open-scd). CoMPAS microservices can be used to create own configuration tooling. CoMPASS Configuration Manager serves as an example of such a tool. |
-| **CoMPAS SCL Data Service** | A service handling the storage of SCL files, hosted on [Github](https://github.com/com-pas/compas-scl-data-service). Besides hosting SCL files, it also offers APIs for storing and retrieving these SCL files. |
+| [**CIM to SSD Mapper**](CIM_61850_MAPPING.md) |  Сервіс, який відображає CIM-представлення підстанції у файл опису специфікації системи (SSD) за стандартом IEC61850. |
+| **CoMPAS Configuration Manager** | Приклад конфігуратора у вигляді веб-сторінки на основі [OpenSCD](https://github.com/openscd/open-scd). Мікросервіси CoMPAS можна використовувати для створення власного інструментарію конфігурації. Прикладом такого інструменту є CoMPASS Configuration Manager. |
+| **CoMPAS SCL Data Service** | Сервіс для зберігання SCL-файлів, розміщений на [Github] (https://github.com/com-pas/compas-scl-data-service). Окрім розміщення SCL-файлів, він також пропонує API для зберігання та отримання цих SCL-файлів. |
 
-_**More services to be added**_
+_**Буде додано більше сервісів**_
 
 
-### Microservice architecture
-CoMPAS will consist of a number of microservices that can be used to build substation configuration tools according to IEC61850. In this situation a microservice architecture is chosen because of
-* CoMPAS will provide reusable components
-* The development will be open source, therefore by multiple development teams. Since microservices are loosely coupled and independent this will fit.
-* Microservices are independently deployable and testable
+### Архітектура мікросервісів
+CoMPAS буде складатися з ряду мікросервісів, які можуть бути використані для побудови інструментів конфігурації підстанції відповідно до IEC61850. У цій ситуації архітектура мікросервісів була обрана тому, що
+* CoMPAS надаватиме компоненти, які можна використовувати повторно
+* Розробка буде з відкритим вихідним кодом, отже, декількома командами розробників. Оскільки мікросервіси слабо пов'язані і незалежні, це підходить.
+* Мікросервіси можна розгортати і тестувати незалежно
 
 ![Microservice architecture](./functional-diagrams/microservice.png)
 
-The diagram shows the generic structure of a microservice. It consists of following layers:
+На схемі показано загальну структуру мікросервісу. Вона складається з наступних рівнів:
 
-| Layer | Description |
+| Рівень | опис |
 | --- | --- |
-| **Resources** |  Implements the REST API |
-| **Service** | Implements the business logic of the service |
-| **Service Entities** |  Business entities within the service |
-| **Data** | Data layer is responsible for access to storage or other services |
-| **Data Entities** | Entities corresponding to the data storage of external services |
+| **Resources** |  Реалізує REST API |
+| **Service** | Реалізує бізнес-логіку сервісу |
+| **Service Entities** |  Бізнес сутності в рамках сервісу |
+| **Data** | Рівень даних відповідає за доступ до сховища або інших сервісів |
+| **Data Entities** | Сутності, що відповідають сховищам даних зовнішніх сервісів |
 
-We adhere to the microservice architecture by applying following rules:
-* Microservices are developed independently
-* If a microservice requires storage (e.g. a database), it will be part of the microservice
-* If some central data store is required, it must be disclosed by a microservice that can be used by the other microservices.
+Ми дотримуємося мікросервісної архітектури, застосовуючи наступні правила:
+* Мікросервіси розробляються незалежно
+* Якщо мікросервісу потрібне сховище (наприклад, база даних), то воно буде частиною мікросервісу
+* Якщо потрібне центральне сховище даних, воно повинно бути доступне мікросервісу, який може бути використаний іншими мікросервісами.
 
-### Design decisions
-This section describes a number of design decisions
+### Проєктні рішення
+У цьому розділі описано низку проєктних рішень
 
 **REST APIs**:
-The microservice offers a REST API that presents the service. The IEC61850 services consists of various data conversions that may take time. The conversion is executed within the scope of the REST call. This means a REST call may take time.
+Мікросервіс пропонує REST API, який представляє сервіс. Сервіси IEC61850 складаються з різних перетворень даних, які можуть зайняти певний час. Перетворення виконується в межах REST-виклику. Це означає, що REST-виклик може зайняти певний час.
 
 **REST Security**:
-Https will be used for the REST calls. Data transferred by the calls must be regarded as confidential and therefore must be protected against data disclosure. Microservices must therefore be provided with a certificate. When all microservices and the Configuration Tool are deployed within the same namespace, it is allowed to use http.
+Для REST-дзвінків буде використовуватися протокол Https. Дані, що передаються за допомогою викликів, повинні розглядатися як конфіденційні і тому повинні бути захищені від розголошення. Тому мікросервіси повинні бути забезпечені сертифікатом. Якщо всі мікросервіси та інструмент конфігурації розгорнуті в одному просторі імен, дозволяється використовувати http.
 
-_OAuth 2.0 Code grant flow_ will be used for authentication and authorization. 
-The user logs in on the Configuration Tool and obtains a code and token (preferably a Java Web Token (JWT)). The token is used to access the microservices as a resource.
-This requires an OAuth server.
+Потік надання кодів _OAuth 2.0_ буде використовуватися для автентифікації та авторизації. 
+Користувач входить в систему за допомогою інструменту конфігурації і отримує код і токен (бажано Java Web Token (JWT)). Токен використовується для доступу до мікросервісів як до ресурсу.
+Для цього потрібен OAuth-сервер.
 
 **Deployment**:
-Microservices will be deployed as docker container
+Мікросервіси будуть розгорнуті у вигляді докер-контейнера
 
 **Scalability and redundancy**: 
-It must be possible to deploy multiple instances of a microservice. We won't expect that scalability will be an issue. Availability might be an issue requiring redundant instances.
+Повинна бути можливість розгортання декількох екземплярів мікросервісу. Ми не очікуємо, що масштабованість буде проблемою. Доступність може бути проблемою, що вимагає надлишкових екземплярів.
 
 
 

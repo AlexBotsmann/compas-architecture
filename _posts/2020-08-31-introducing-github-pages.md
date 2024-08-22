@@ -9,9 +9,9 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-Today we're announcing the Github Pages layout for our CoMPAS Architecture repo.
-Hope you like it! :)
+Сьогодні ми анонсуємо макет сторінок Github для нашого репозиторію CoMPAS Architecture.
+Сподіваємось, вам сподобається! :)
 
-Interested in contributing? Please read carefully the [CONTRIBUTING guidelines](https://github.com/com-pas/contributing/blob/master/CONTRIBUTING.md).
+Бажаєте долучитися? Будь ласка, уважно прочитайте [CONTRIBUTING guidelines](https://github.com/com-pas/contributing/blob/master/CONTRIBUTING.md).
 
-Thanks!
+Дякуємо!

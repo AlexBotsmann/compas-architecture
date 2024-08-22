@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## Archive
 
-The following pages are archived.
+Наступні сторінки заархівовані.
 - [Technology Choices](./TECHNOLOGY_CHOICES.md)
 - [Technology Survey](./TECHNOLOGY_SURVEY.md)
 - [Tools Choices](./TOOLS_CHOICES.md)

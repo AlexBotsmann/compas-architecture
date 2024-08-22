@@ -4,59 +4,57 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-## Architecture for CIM - IEC 61850 mapping.
+## Архітектура для мапингуя CIM - IEC 61850.
 
-To do the mapping, we need some kind of XML processing tool for processing incoming / outgoing XML files.
+Щоб зробити мапинг, нам потрібен якийсь інструмент обробки XML для обробки вхідних/вихідних XML-файлів.
 
-### What it should do
-- Manipulate XML files
-- Can be used within the Java programming language
-- Not using an extra library is a pro
-- Memory efficient is a pro (because of the running locally or in the cloud requirement)
-- Handle RDF formats (because the assumption can be made that all incoming CIM files are using the RDF framework)
+### Що воно повинно робити?
+- Маніпулювання XML-файлами
+- Можна використовувати в мові програмування Java
+- Відсутність використання додаткової бібліотеки (це профіт)
+- Ефективне використання пам'яті (через вимогу до запуску локально або в хмарі)
+- Обробка форматів RDF (оскільки можна зробити припущення, що всі вхідні CIM-файли використовують фреймворк RDF)
 
-### Options found
-Within Java, there are basically 4 XML support API definitions:
+### Знайдені варіанти
+В Java існує в основному 4 визначення API для підтримки XML:
 - SAX
 - DOM
 - StAX
 - JAXB
 
-Each of these has it's own pros and cons:
+У кожного з них є свої плюси і мінуси:
 
 |                          | SAX                                 | DOM                                 | StAX                                | JAXB                                |
 | :----------------------- | :---------------------------------- | :---------------------------------- | :---------------------------------- | :---------------------------------- |
-| Memory efficient         | <span style="color:green">Ok</span> | <span style="color:red">No</span>   | <span style="color:green">Ok</span> | <span style="color:green">Ok</span> |
-| Bidirectional navidation | <span style="color:red">No</span>   | <span style="color:green">Ok</span> | <span style="color:red">No</span>   | <span style="color:green">Ok</span> |
-| XML manipulation         | <span style="color:red">No</span>   | <span style="color:green">Ok</span> | <span style="color:red">No</span>   | <span style="color:green">Ok</span> |
-| Data binding             | <span style="color:red">No</span>   | <span style="color:red">No</span>   | <span style="color:red">No</span>   | <span style="color:green">Ok</span> |
+| Єфективна пам'ять         | <span style="color:green">Ok</span> | <span style="color:red">No</span>   | <span style="color:green">Ok</span> | <span style="color:green">Ok</span> |
+| Двонаправлена навігація | <span style="color:red">No</span>   | <span style="color:green">Ok</span> | <span style="color:red">No</span>   | <span style="color:green">Ok</span> |
+| Маніпуляції з XML        | <span style="color:red">No</span>   | <span style="color:green">Ok</span> | <span style="color:red">No</span>   | <span style="color:green">Ok</span> |
+| Прив'язка даних           | <span style="color:red">No</span>   | <span style="color:red">No</span>   | <span style="color:red">No</span>   | <span style="color:green">Ok</span> |
 
-Source: Baeldung.com
+Джелело: Baeldung.com
 
-According to this table, we have 2 options left is we want to manipulate the XML configuration files: DOM and JAXB.
-Combined with the fact that being memory efficient is a pro, JAXB would be ideal to use for XML processing!
+Згідно з цією таблицею, у нас залишилося 2 варіанти, якщо ми хочемо маніпулювати конфігураційними файлами XML: DOM і JAXB. Враховуючи той факт, що ефективне використання пам'яті є перевагою, JAXB буде ідеальним варіантом для обробки XML!
 
-### Incoming CIM files
-Because of the assumption that all incoming CIM files are using the RDF framework, it's not smart to use JAXB for incoming CIM files.
-If we would do that, we are re-inventing the wheel.
-There are some other libraries to handle these kinds of RDF files.
-[RDF4J](https://rdf4j.org/) and [Apache Jena](https://jena.apache.org/) are mostly used for this.
-They don't differ that much in their qualities, so it's actually a matter of taste which one to use. Both are also open source, so they fit perfectly in the CoMPAS architecture.
+### Вхідні CIM-файли
+Через припущення, що всі вхідні CIM-файли використовують фреймворк RDF, нерозумно використовувати JAXB для вхідних CIM-файлів. Якщо ми це зробимо, ми винайдемо велосипед. Існують інші бібліотеки для роботи з такими типами RDF-файлів.
+[RDF4J](https://rdf4j.org/) і [Apache Jena](https://jena.apache.org/) найбільш використовуються для цього.
 
-We decided to use RDF4J, because it has plenty of examples in [PowSyBl](https://github.com/powsybl/powsybl-core) and it has a great and active [community](https://github.com/eclipse/rdf4j).
+Вони не надто відрізняються за своїми якостями, тому насправді це справа смаку, який з них використовувати. Обидва також мають відкритий вихідний код, тому вони ідеально вписуються в архітектуру CoMPAS.
 
-### Outgoing SCL files
-For the outgoing SCL file, we already have the Java models to fill in. We generate these Java models based on the IEC-61859-6 XSD schemas by using the JAXB XJC tool. This way, the only thing we have to do is adding the data from the RDF4J model to the IEC 61850-6 SCL model. And the final step is to 'marshal' this Java model to a XML file.
+Ми вирішили використовувати RDF4J, тому що він має багато прикладів в [PowSyBl](https://github.com/powsybl/powsybl-core) і має чудову та активну [спільноту](https://github.com/eclipse/rdf4j).
 
-### Mapping of RDF4J data to SCL Java classes
-The mapping itself is being done with [Orika](https://orika-mapper.github.io/orika-docs/). Orika is a Java bean for mapping data between two classes and makes it more simple.
+### Вихідні SCL-файли
+Для вихідного SCL-файлу у нас вже є Java-моделі для заповнення. Ми генеруємо ці Java-моделі на основі XSD-схем IEC-61859-6 за допомогою інструменту JAXB XJC. Таким чином, єдине, що нам потрібно зробити, це додати дані з моделі RDF4J до моделі IEC 61850-6 SCL. І останнім кроком є "марширування" цієї Java-моделі в XML-файл.
 
-Mapping is done between a RDF4J model (statement) and a SCL class.
+### Маппінг даних RDF4J в SCL Java класи
+Сам маппінг виконується за допомогою [Orika] (https://orika-mapper.github.io/orika-docs/). Orika - це Java-боб для маппінгу даних між двома класами, що робить його більш простим.
 
-### Architecture overview
+Маппинг здійснюється між моделлю (оператором) RDF4J та класом SCL.
+
+### Огляд архітектури
 ![mapping architecture overview](../images/CIM_61850_mapping_architecture_overview.svg)
 
-### References
+### Посилання
 IEC 61970-301: Common Information Model
 
 IEC 61970-552: Specification of CIMXML

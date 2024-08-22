@@ -4,17 +4,17 @@ SPDX-FileCopyrightText: 2021 Alliander N.V.
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Glossary
+# Глосарій
 
-| Term | Description |
-| --- | --- |
-| **CID** | **Configured IED Description**. This SCL file contains the device-specific data for the configuration of an IED. |
-|**ICD** | **IED Capability Description**. This SCL file contains the description of the complete capabilities of an IED as well as the associated logical nodes and data types. |
-|**IID** | **Instantiated IED Description**. This SCL file contains the instantiated configuration of an IED returned by an IED configurator. |
-|**ISD** | **IED Specification Description**. The ISD file is the formal specification of IEDs or IED Types that the utility imposes to the IED vendor as part of the frame agreement. By associating the ISD Files with the specification documents a device dependent specification can be created. |
-|**SCD**| **System Configuration Description**. This SCL file contains the description of the complete substation automation system (single line diagram and logical node representation of functionalities, communication network, IED functions and configurations). |
-|**SED**| **System Exchange Description**. This SCL file is to be exchanged between system configurators of different projects. It describes the interfaces of one project to be used by another project, and at re-import the additionally engineered interface connections between the projects.|
-|**SCL**| The **System Configuration description Language** is the language specified by the IEC 61850 standard for the configuration of devices in the power substation. It aims at ensuring the functional interoperability between equipment from a system perspective by defining object models for the devices and for their interrelated functions. SCL is defined in IEC 61850 Part 6. It includes several types of files: SSD, SCD, ICD, CID, IID, SED. *(cf. https://en.wikipedia.org/wiki/Substation_Configuration_Language)* |
-|**SED**| **System Exchange Description**. This SCL file contains the description of the communication interface between two systems (two substations). |
-|**SSD**| **System Specification Description**. This SCL file contains the description of the substation automation system based on a single line diagram and a logical node representation of functionalities. |
+| Термін | Розшифрування| Опис |
+| --- | --- | --- |
+| **CID** | **Configured IED Description** | Цей SCL-файл містить специфічні для пристрою дані для конфігурації IED. |
+|**ICD** | **IED Capability Description** | Цей SCL-файл містить опис повних можливостей IED, а також пов'язаних з ним логічних вузлів і типів даних. |
+|**IID** | **Instantiated IED Description** | Цей SCL-файл містить конкретну конфігурацію IED, повернуту конфігуратором IED. |
+|**ISD** | **IED Specification Description** | Файл ISD - це формальна специфікація IED або типів IED, яку утиліта нав'язує постачальнику IED як частину рамкової угоди. Пов'язуючи ISD-файли з документами специфікації, можна створити специфікацію, що залежить від пристрою. |
+|**SCD**| **System Configuration Description** | Цей SCL-файл містить опис повної системи автоматизації підстанції (однолінійну схему та логічне представлення функціональних вузлів, мережу зв'язку, функції та конфігурації IED). |
+|**SED**| **System Exchange Description** | Цей SCL-файл призначений для обміну між системними конфігураторами різних проєктів. Він описує інтерфейси одного проєкту, які будуть використовуватися іншим проєктом, і при повторному імпорті додатково розроблені інтерфейсні зв'язки між проєктами.|
+|**SCL**| **System Configuration description Language** | Мова, визначена стандартом IEC 61850 для конфігурації пристроїв на електропідстанції. Вона спрямована на забезпечення функціональної сумісності між обладнанням з системної точки зору шляхом визначення об'єктних моделей для пристроїв та їх взаємопов'язаних функцій. SCL визначений в IEC 61850, частина 6. Він включає в себе кілька типів файлів: SSD, SCD, ICD, CID, IID, SED. *(див. https://en.wikipedia.org/wiki/Substation_Configuration_Language)*.|
+|**SED**| **System Exchange Description** | Цей SCL-файл містить опис інтерфейсу зв'язку між двома системами (двома підстанціями). |
+|**SSD**| **System Specification Description** | Цей SCL-файл містить опис системи автоматизації підстанції на основі єдиної лінійної схеми і логічного вузлового представлення функціональних можливостей. |
 

@@ -6,32 +6,32 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## Mapping CIM - IEC 61850
 
-We got a mapping example from RTE, they already created a mapping between CIM files and IEC 61850 files.
-We used the IEC 623610-102 standard to compare it with the example we got from RTE.
+Ми отримали приклад зіставлення від RTE, вони вже створили зіставлення між файлами CIM і файлами IEC 61850.
+Ми використовували стандарт IEC 623610-102, щоб порівняти його з прикладом, який ми отримали від RTE.
 
-The goal is to compare a few components, to see if we are able to say: We can use this mapping!
-This way, we don't have to figure it all out ourselves.
+Мета полягає в тому, щоб порівняти кілька компонентів, щоб побачити, чи ми можемо сказати: ми можемо використовувати це відображення!
+Таким чином, нам не доведеться з’ясовувати все самим.
 
 ### Findings
-We see the following CIM components in the mapping example:
+У прикладі зіставлення ми бачимо такі компоненти CIM:
 
-Bay
-Breaker
-ConnectivityNode
-Disconnector
-EnergyConsumer
-LoadBreakSwitch
-PowerTransformer
-PowerTransformerEnd
-Substation
-Terminal
-VoltageLevel
+Bay (Відсік)
+Breaker (Вимикач)
+ConnectivityNode (Вузол приєднання)
+Disconnector (Роз'єднувач)
+EnergyConsumer (Споживач енергії)
+LoadBreakSwitch (Вимикач навантаження)
+PowerTransformer (Силовий Трансформатор)
+PowerTransformerEnd (Вивід силового трансформатора)
+Substation (Пвдстанція)
+Terminal (Термінал)
+VoltageLevel (Рівень напруги)
 
-- Substation seems to be okay, there might be some tricky situations I'm not aware of.
-- PowerTransformer* looks not complete. According to the IEC 62361-102 standard, the SCL equivalent is 'TransformerWinding', this is done differently.
-- Components like Terminal and Bay are looking fine!
+– З підстанцією ніби все гаразд, можуть бути складні ситуації, про які я не знаю.
+- PowerTransformer* виглядає незавершеним. Відповідно до стандарту IEC 62361-102 еквівалентом SCL є «TransformerWinding», це робиться інакше.
+- Такі компоненти, як Terminal і Bay, виглядають добре!
 
-#### Missing some SCL elements
+#### Нестача деяких SCL елементів
 - whole 'Process' SCL element mapping
 - whole 'Line' SCL element mapping
 - whole 'GeneralEquipment' SCL element mapping
@@ -39,14 +39,14 @@ VoltageLevel
 - whole 'Function'/'SubFunction'/'EqFunction'/'EqSubFunction' SCL element mapping
 - whole 'Tapchanger' SCL element mapping
 
-## Questions
-- the open_substation.scd file contains a SCL section. Is this considered the header? (Because it has stuff like version and revision in it)
-- What to do with the Header section of an SCL file? Create a new one?
+## Питання
+- файл open_substation.scd містить секцію SCL. Чи вважається це заголовком? (Тому що у ньому містяться такі дані, як версія та ревізія)
+- Що робити з розділом заголовка SCL-файлу? Створити новий?
 
-## Conclusion
-Part of the mapping is according the standard, part of the mapping is missing standard information (Like Process and Line).
-I think it's good to use it as a reference, but we have to dig into the IEC 62361-102 ourselves to complete the mapping.
+## Висновок
+Частина схем відповідає стандарту, частина схем не містить стандартної інформації (наприклад, «Process» і «Line»).
+Я вважаю, що його можна використовувати як довідник, але ми повинні самі заглибитися в IEC 62361-102, щоб завершити мапування.
 
-## Source
+## Джерело
 
 - IEC/TS 62361-102:2018
